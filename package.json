@@ -1,66 +1,121 @@
-const summaryCards = [
-  { label: 'Saldo', value: '€2.670', delta: '+€320', tone: 'green' },
-  { label: 'Focus', value: '82%', delta: '+8%', tone: 'blue' },
-  { label: 'Allenamenti', value: '4/5', delta: '+1', tone: 'yellow' },
-  { label: 'Sonno', value: '7h20m', delta: '+35m', tone: 'green' }
-];
+# Soldi, Mente e Corpo
 
-const priorityItems = [
-  { title: 'Risparmio mensile', detail: '€200 da versare', value: '80%' },
-  { title: 'Sessione di lettura', detail: '20 minuti prima di dormire', value: '90%' },
-  { title: 'Allenamento cardio', detail: '30 minuti e stretching', value: '65%' }
-];
+Dashboard moderna e interattiva per monitorare il benessere complessivo: finanza, crescita mentale e salute fisica.
 
-const trendValues = [48, 58, 64, 72, 81, 76, 90];
-const labels = ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
+## Funzioni principali
 
-const summaryContainer = document.getElementById('summary-cards');
-const priorityList = document.getElementById('priority-list');
-const trendChart = document.getElementById('trend-chart');
+- Soldi: entrate, uscite, risparmi e obiettivi finanziari
+- Mente: focus, meditazione, lettura e routine mentale
+- Corpo: allenamenti, passi, sonno e benessere fisico
+- KPI: progressi settimanali, trend e obiettivi quotidiani
+- Persistenza: i dati vengono salvati localmente nel browser
 
-summaryContainer.innerHTML = summaryCards
-  .map(
-    (item) => `
-      <article class="summary-card">
-        <p class="label">${item.label}</p>
-        <div class="value">
-          <h3>${item.value}</h3>
-          <span class="delta ${item.tone}">${item.delta}</span>
-        </div>
-      </article>
-    `
-  )
-  .join('');
+## Struttura del progetto
 
-priorityList.innerHTML = priorityItems
-  .map(
-    (item) => `
-      <div class="priority-item">
-        <div class="priority-main">
-          <span class="priority-badge"></span>
-          <div>
-            <p>${item.title}</p>
-            <small>${item.detail}</small>
-          </div>
-        </div>
-        <span class="priority-value">${item.value}</span>
-      </div>
-    `
-  )
-  .join('');
+- `index.html` – dashboard principale
+- `styles.css` – interfaccia grafica e responsività
+- `script.js` – rendering dinamico e aggiornamenti dati
+- `package.json` – configurazione minimale del progetto
 
-trendChart.innerHTML = trendValues
-  .map(
-    (value, index) => `
-      <div class="chart-bar" style="height: ${value}%" data-label="${labels[index]}"></div>
-    `
-  )
-  .join('');
+## Avvio locale
 
-const navItems = document.querySelectorAll('.nav-item');
-navItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    navItems.forEach((btn) => btn.classList.remove('active'));
-    item.classList.add('active');
-  });
-});
+Puoi aprire il file `index.html` direttamente nel browser oppure usare un server locale:
+
+```bash
+cd soldi-mente-corpo
+python3 -m http.server 8000
+```
+
+Poi visita:
+
+```text
+http://localhost:8000
+```
+
+## Obiettivo del progetto
+
+Creare un tool semplice ma molto utile per mantenere equilibrio tra:
+
+- stabilità economica
+- chiarezza mentale
+- salute fisica
+
+## Roadmap
+
+1. Dashboard principale con KPI
+2. Sezioni finanziaria, mentale e fisica
+3. Aggiornamento dati interattivo
+4. Persistenza in localStorage
+5. Possibile evoluzione con backend, login e grafici avanzati
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

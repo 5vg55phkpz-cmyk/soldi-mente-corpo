@@ -4,9 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Soldi · Mente · Corpo</title>
+    <meta
+      name="description"
+      content="Dashboard per monitorare budget, crescita mentale e salute fisica."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,7 +27,7 @@
           </div>
         </div>
 
-        <nav class="nav">
+        <nav class="nav" aria-label="menu principale">
           <button class="nav-item active">Overview</button>
           <button class="nav-item">Soldi</button>
           <button class="nav-item">Mente</button>
@@ -30,11 +37,11 @@
 
         <div class="mini-card">
           <p class="label">Stato del mese</p>
-          <h3>76%</h3>
-          <div class="progress-bar">
-            <span style="width: 76%"></span>
+          <h3 id="monthProgressValue">76%</h3>
+          <div class="progress-bar" aria-label="stato del mese">
+            <span id="monthProgressBar" style="width: 76%"></span>
           </div>
-          <small>+12% rispetto al mese scorso</small>
+          <small id="monthProgressText">+12% rispetto al mese scorso</small>
         </div>
       </aside>
 
@@ -44,13 +51,14 @@
             <p class="eyebrow">Buongiorno</p>
             <h2>Panoramica del tuo equilibrio</h2>
           </div>
+
           <div class="topbar-actions">
-            <div class="pill">Settimana</div>
-            <button class="primary-btn">Nuovo tracciamento</button>
+            <div class="pill" id="periodLabel">Mese</div>
+            <button class="primary-btn" id="refreshDataBtn">Aggiorna dati</button>
           </div>
         </header>
 
-        <section id="summary-cards" class="summary-grid"></section>
+        <section id="summaryCards" class="summary-grid" aria-live="polite"></section>
 
         <section class="content-grid">
           <article class="panel large-panel">
@@ -59,36 +67,36 @@
                 <p class="eyebrow">Soldi</p>
                 <h3>Bilancio e risparmi</h3>
               </div>
-              <span class="tag success">+€320</span>
+              <span class="tag success" id="moneyGainTag">+€320</span>
             </div>
 
             <div class="metric-row">
               <div>
                 <label>Entrate</label>
-                <strong>€2.450</strong>
+                <strong id="incomeValue">€2.450</strong>
               </div>
               <div>
                 <label>Spese</label>
-                <strong>€1.780</strong>
+                <strong id="expenseValue">€1.780</strong>
               </div>
               <div>
                 <label>Risparmio</label>
-                <strong>€670</strong>
+                <strong id="savingValue">€670</strong>
               </div>
             </div>
 
             <div class="bars">
               <div class="bar-group">
                 <span>Entrate</span>
-                <div class="bar-track"><i class="bar fill-green" style="width: 72%"></i></div>
+                <div class="bar-track"><i id="incomeBar" class="bar fill-green" style="width: 72%"></i></div>
               </div>
               <div class="bar-group">
                 <span>Spese</span>
-                <div class="bar-track"><i class="bar fill-red" style="width: 58%"></i></div>
+                <div class="bar-track"><i id="expenseBar" class="bar fill-red" style="width: 58%"></i></div>
               </div>
               <div class="bar-group">
                 <span>Obiettivo</span>
-                <div class="bar-track"><i class="bar fill-blue" style="width: 83%"></i></div>
+                <div class="bar-track"><i id="goalBar" class="bar fill-blue" style="width: 83%"></i></div>
               </div>
             </div>
           </article>
@@ -99,14 +107,10 @@
                 <p class="eyebrow">Mente</p>
                 <h3>Focus e calma</h3>
               </div>
-              <span class="tag neutral">82/100</span>
+              <span class="tag neutral" id="focusTag">82/100</span>
             </div>
 
-            <ul class="checklist">
-              <li><span class="dot dot-emerald"></span> Meditazione 15 min</li>
-              <li><span class="dot dot-gold"></span> Lettura 20 min</li>
-              <li><span class="dot dot-blue"></span> Nessuna distrazione</li>
-            </ul>
+            <ul class="checklist" id="mindList"></ul>
           </article>
 
           <article class="panel">
@@ -115,14 +119,10 @@
                 <p class="eyebrow">Corpo</p>
                 <h3>Benessere fisico</h3>
               </div>
-              <span class="tag warning">7.842 passi</span>
+              <span class="tag warning" id="stepsTag">7.842 passi</span>
             </div>
 
-            <ul class="checklist">
-              <li><span class="dot dot-red"></span> Allenamento 45 min</li>
-              <li><span class="dot dot-violet"></span> Sonno 7h 20m</li>
-              <li><span class="dot dot-cyan"></span> Idratazione ok</li>
-            </ul>
+            <ul class="checklist" id="bodyList"></ul>
           </article>
         </section>
 
@@ -135,7 +135,7 @@
               </div>
             </div>
 
-            <div id="priority-list" class="priority-list"></div>
+            <div id="priorityList" class="priority-list"></div>
           </article>
 
           <article class="panel">
@@ -147,7 +147,7 @@
             </div>
 
             <div class="chart-wrap">
-              <div class="chart-bars" id="trend-chart"></div>
+              <div class="chart-bars" id="trendChart"></div>
             </div>
           </article>
         </section>
@@ -157,3 +157,48 @@
     <script src="script.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
