@@ -1,0 +1,66 @@
+const summaryCards = [
+  { label: 'Saldo', value: '€2.670', delta: '+€320', tone: 'green' },
+  { label: 'Focus', value: '82%', delta: '+8%', tone: 'blue' },
+  { label: 'Allenamenti', value: '4/5', delta: '+1', tone: 'yellow' },
+  { label: 'Sonno', value: '7h20m', delta: '+35m', tone: 'green' }
+];
+
+const priorityItems = [
+  { title: 'Risparmio mensile', detail: '€200 da versare', value: '80%' },
+  { title: 'Sessione di lettura', detail: '20 minuti prima di dormire', value: '90%' },
+  { title: 'Allenamento cardio', detail: '30 minuti e stretching', value: '65%' }
+];
+
+const trendValues = [48, 58, 64, 72, 81, 76, 90];
+const labels = ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
+
+const summaryContainer = document.getElementById('summary-cards');
+const priorityList = document.getElementById('priority-list');
+const trendChart = document.getElementById('trend-chart');
+
+summaryContainer.innerHTML = summaryCards
+  .map(
+    (item) => `
+      <article class="summary-card">
+        <p class="label">${item.label}</p>
+        <div class="value">
+          <h3>${item.value}</h3>
+          <span class="delta ${item.tone}">${item.delta}</span>
+        </div>
+      </article>
+    `
+  )
+  .join('');
+
+priorityList.innerHTML = priorityItems
+  .map(
+    (item) => `
+      <div class="priority-item">
+        <div class="priority-main">
+          <span class="priority-badge"></span>
+          <div>
+            <p>${item.title}</p>
+            <small>${item.detail}</small>
+          </div>
+        </div>
+        <span class="priority-value">${item.value}</span>
+      </div>
+    `
+  )
+  .join('');
+
+trendChart.innerHTML = trendValues
+  .map(
+    (value, index) => `
+      <div class="chart-bar" style="height: ${value}%" data-label="${labels[index]}"></div>
+    `
+  )
+  .join('');
+
+const navItems = document.querySelectorAll('.nav-item');
+navItems.forEach((item) => {
+  item.addEventListener('click', () => {
+    navItems.forEach((btn) => btn.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
