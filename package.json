@@ -1,92 +1,17 @@
-# Soldi, Mente e Corpo
-
-Dashboard avanzata e interattiva per monitorare il benessere complessivo: finanza, maturità mentale e salute fisica.
-
-## Funzioni principali
-
-- Soldi: entrate, spese, budget mensile e transazioni
-- Mente: focus, routine e riflessioni giornaliere
-- Corpo: passi, sonno e attività fisica
-- Obiettivi: traguardi e progresso visuale
-- Persistenza: i dati restano salvati localmente nel browser
-
-## Struttura del progetto
-
-- `index.html` – dashboard principale
-- `styles.css` – layout avanzato e responsivo
-- `script.js` – logica di rendering e interazioni
-- `README.md` – documentazione del progetto
-- `package.json` – configurazione base del progetto
-
-## Avvio locale
-
-Puoi aprire direttamente `index.html` nel browser oppure usare un server locale:
-
-```bash
-cd soldi-mente-corpo
-python3 -m http.server 8000
-```
-
-Poi visita:
-
-```text
-http://localhost:8000
-```
-
-## Obiettivo del progetto
-
-Creare un’applicazione moderna e utile per mantenere equilibrio tra:
-
-- stabilità economica
-- chiarezza mentale
-- salute fisica
-
-## Possibili sviluppi futuri
-
-1. backend e database
-2. login utente
-3. sincronizzazione cloud
-4. grafici avanzati e draggables
-5. dashboard personalizzabile
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{
+  "name": "soldi-mente-corpo",
+  "version": "1.0.0",
+  "description": "Dashboard full-stack per tracciare soldi, mente e corpo con login e database",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.0"
+  }
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soldi · Mente · Corpo</title>
+    <meta
+      name="description"
+      content="Dashboard full-stack per monitorare soldi, mente e corpo."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="authScreen" class="auth-shell">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">Benvenuto</p>
+            <h1>Soldi · Mente · Corpo</h1>
+          </div>
+        </div>
+
+        <div class="auth-toggle">
+          <button class="mode-btn active" data-mode="login">Accedi</button>
+          <button class="mode-btn" data-mode="register">Registrati</button>
+        </div>
+
+        <form id="authForm" class="auth-form">
+          <label>
+            Username
+            <input type="text" name="username" placeholder="es. mario" required />
+          </label>
+
+          <label>
+            Password
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+
+          <button type="submit" class="primary-btn wide">Entra</button>
+        </form>
+
+        <p id="authMessage" class="auth-message"></p>
+      </div>
+    </div>
+
+    <div id="appShell" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h1>Soldi · Mente · Corpo</h1>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="menu principale">
+          <button class="nav-item active" data-view="overview">Overview</button>
+          <button class="nav-item" data-view="money">Soldi</button>
+          <button class="nav-item" data-view="mind">Mente</button>
+          <button class="nav-item" data-view="body">Corpo</button>
+          <button class="nav-item" data-view="goals">Obiettivi</button>
+        </nav>
+
+        <div class="mini-card">
+          <p class="label">Stato del mese</p>
+          <h3 id="monthProgressValue">76%</h3>
+          <div class="progress-bar" aria-label="stato del mese">
+            <span id="monthProgressBar" style="width: 76%"></span>
+          </div>
+          <small id="monthProgressText">+12% rispetto al mese scorso</small>
+        </div>
+
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Buongiorno</p>
+            <h2>Panoramica del tuo equilibrio</h2>
+          </div>
+
+          <div class="topbar-actions">
+            <div class="pill" id="userLabel">Utente</div>
+            <button class="primary-btn" id="refreshDataBtn">Aggiorna dati</button>
+          </div>
+        </header>
+
+        <section id="overview" class="view active">
+          <div id="summaryCards" class="summary-grid" aria-live="polite"></div>
+
+          <div class="content-grid">
+            <article class="panel large-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Soldi</p>
+                  <h3>Bilancio e risparmi</h3>
+                </div>
+                <span class="tag success" id="moneyGainTag">+€320</span>
+              </div>
+
+              <div class="metric-row">
+                <div>
+                  <label>Entrate</label>
+                  <strong id="incomeValue">€2.450</strong>
+                </div>
+                <div>
+                  <label>Spese</label>
+                  <strong id="expenseValue">€1.780</strong>
+                </div>
+                <div>
+                  <label>Risparmio</label>
+                  <strong id="savingValue">€670</strong>
+                </div>
+              </div>
+
+              <div class="bars">
+                <div class="bar-group">
+                  <span>Entrate</span>
+                  <div class="bar-track"><i id="incomeBar" class="bar fill-green" style="width: 72%"></i></div>
+                </div>
+                <div class="bar-group">
+                  <span>Spese</span>
+                  <div class="bar-track"><i id="expenseBar" class="bar fill-red" style="width: 58%"></i></div>
+                </div>
+                <div class="bar-group">
+                  <span>Obiettivo</span>
+                  <div class="bar-track"><i id="goalBar" class="bar fill-blue" style="width: 83%"></i></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Mente</p>
+                  <h3>Focus e calma</h3>
+                </div>
+                <span class="tag neutral" id="focusTag">82/100</span>
+              </div>
+              <ul class="checklist" id="mindList"></ul>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Corpo</p>
+                  <h3>Benessere fisico</h3>
+                </div>
+                <span class="tag warning" id="stepsTag">7.842 passi</span>
+              </div>
+              <ul class="checklist" id="bodyList"></ul>
+            </article>
+          </div>
+
+          <div class="bottom-grid">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Priorità</p>
+                  <h3>Obiettivi oggi</h3>
+                </div>
+              </div>
+              <div id="priorityList" class="priority-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Progresso</p>
+                  <h3>Andamento settimanale</h3>
+                </div>
+              </div>
+              <div class="chart-wrap">
+                <div class="chart-bars" id="trendChart"></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="money" class="view">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Soldi</p>
+              <h3>Gestione del budget</h3>
+            </div>
+          </div>
+
+          <div class="money-grid">
+            <article class="panel">
+              <div class="donut-wrap">
+                <div class="donut-chart" id="budgetDonut" style="--progress: 72; --accent: #34d399;">
+                  <div class="donut-inner">
+                    <strong id="budgetDonutValue">72%</strong>
+                    <small>Budget usato</small>
+                  </div>
+                </div>
+              </div>
+              <h4>Budget mensile</h4>
+              <p id="budgetContext">€2400 / €3300</p>
+            </article>
+
+            <article class="panel">
+              <div class="list-header">
+                <h4>Transazioni recenti</h4>
+              </div>
+              <ul id="transactionList" class="transaction-list"></ul>
+            </article>
+
+            <article class="panel full-span">
+              <div class="list-header">
+                <h4>Aggiungi movimento</h4>
+              </div>
+
+              <form id="transactionForm" class="transaction-form">
+                <label>
+                  Tipo
+                  <select name="type">
+                    <option value="income">Entrata</option>
+                    <option value="expense">Spesa</option>
+                  </select>
+                </label>
+
+                <label>
+                  Categoria
+                  <input type="text" name="category" placeholder="Es. stipendio, cibo, affitto" required />
+                </label>
+
+                <label>
+                  Importo (€)
+                  <input type="number" name="amount" min="1" step="0.01" placeholder="0.00" required />
+                </label>
+
+                <button type="submit" class="primary-btn">Salva</button>
+              </form>
+            </article>
+          </div>
+        </section>
+
+        <section id="mind" class="view">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Mente</p>
+              <h3>Benessere mentale</h3>
+            </div>
+          </div>
+
+          <div class="mind-grid">
+            <article class="panel">
+              <div class="score-block">
+                <span class="score-label">Focus</span>
+                <strong id="mindScoreValue">82%</strong>
+              </div>
+              <div class="score-rail">
+                <span id="mindScoreBar" style="width: 82%"></span>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="list-header">
+                <h4>Routine mentale</h4>
+              </div>
+              <ul id="mindRoutineList" class="habit-list"></ul>
+            </article>
+
+            <article class="panel full-span">
+              <div class="list-header">
+                <h4>Note del giorno</h4>
+              </div>
+              <textarea id="dailyNote" rows="5" placeholder="Scrivi un pensiero, un obiettivo o una riflessione..."></textarea>
+            </article>
+          </div>
+        </section>
+
+        <section id="body" class="view">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Corpo</p>
+              <h3>Salute fisica</h3>
+            </div>
+          </div>
+
+          <div class="body-grid">
+            <article class="panel stat-card">
+              <span class="stat-subtitle">Passi</span>
+              <strong id="stepsDisplay">7.842</strong>
+              <small>Target giornaliero: 10.000</small>
+            </article>
+
+            <article class="panel stat-card">
+              <span class="stat-subtitle">Sonno</span>
+              <strong id="sleepDisplay">7h 20m</strong>
+              <small>Media ottimale</small>
+            </article>
+
+            <article class="panel stat-card">
+              <span class="stat-subtitle">Hydration</span>
+              <strong>2.1L</strong>
+              <small>+0.4L rispetto a ieri</small>
+            </article>
+
+            <article class="panel full-span">
+              <div class="list-header">
+                <h4>Attività recente</h4>
+              </div>
+              <ul id="bodyActivities" class="habit-list"></ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="goals" class="view">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Obiettivi</p>
+              <h3>Progressi e traguardi</h3>
+            </div>
+          </div>
+
+          <div class="goal-grid" id="goalGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
