@@ -1,25 +1,26 @@
 # Soldi, Mente e Corpo
 
-Dashboard moderna e interattiva per monitorare il benessere complessivo: finanza, crescita mentale e salute fisica.
+Dashboard avanzata e interattiva per monitorare il benessere complessivo: finanza, maturità mentale e salute fisica.
 
 ## Funzioni principali
 
-- Soldi: entrate, uscite, risparmi e obiettivi finanziari
-- Mente: focus, meditazione, lettura e routine mentale
-- Corpo: allenamenti, passi, sonno e benessere fisico
-- KPI: progressi settimanali, trend e obiettivi quotidiani
-- Persistenza: i dati vengono salvati localmente nel browser
+- Soldi: entrate, spese, budget mensile e transazioni
+- Mente: focus, routine e riflessioni giornaliere
+- Corpo: passi, sonno e attività fisica
+- Obiettivi: traguardi e progresso visuale
+- Persistenza: i dati restano salvati localmente nel browser
 
 ## Struttura del progetto
 
 - `index.html` – dashboard principale
-- `styles.css` – interfaccia grafica e responsività
-- `script.js` – rendering dinamico e aggiornamenti dati
-- `package.json` – configurazione minimale del progetto
+- `styles.css` – layout avanzato e responsivo
+- `script.js` – logica di rendering e interazioni
+- `README.md` – documentazione del progetto
+- `package.json` – configurazione base del progetto
 
 ## Avvio locale
 
-Puoi aprire il file `index.html` direttamente nel browser oppure usare un server locale:
+Puoi aprire direttamente `index.html` nel browser oppure usare un server locale:
 
 ```bash
 cd soldi-mente-corpo
@@ -34,49 +35,19 @@ http://localhost:8000
 
 ## Obiettivo del progetto
 
-Creare un tool semplice ma molto utile per mantenere equilibrio tra:
+Creare un’applicazione moderna e utile per mantenere equilibrio tra:
 
 - stabilità economica
 - chiarezza mentale
 - salute fisica
 
-## Roadmap
+## Possibili sviluppi futuri
 
-1. Dashboard principale con KPI
-2. Sezioni finanziaria, mentale e fisica
-3. Aggiornamento dati interattivo
-4. Persistenza in localStorage
-5. Possibile evoluzione con backend, login e grafici avanzati
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. backend e database
+2. login utente
+3. sincronizzazione cloud
+4. grafici avanzati e draggables
+5. dashboard personalizzabile
 
 
 
