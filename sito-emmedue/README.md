@@ -38,6 +38,12 @@ I messaggi che arrivano all'agenzia (WhatsApp/email) restano sempre in italiano.
 - Tre lingue (IT / EN / ES) con selettore in alto (nel menu su telefono); la scelta viene ricordata.
   Link diretti: `index.html?lang=en`, `index.html?lang=es`
 
+## Prima della messa online
+
+Il sito è ora una **demo** per la proposta all'agenzia: in `index.html` c'è
+`<meta name="robots" content="noindex, nofollow">`, che impedisce a Google di indicizzarlo.
+Quando va online sul dominio dell'agenzia, **togliere quella riga**.
+
 ## Da completare
 
 - Foto hero: ora è una foto generica da Unsplash; sostituirla con una foto vostra.
