@@ -69,9 +69,7 @@
   ]
 }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="vendor/fonts/poppins-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="styles.css" />
     <script>
       /* Nasconde l'hero finché le animazioni non partono (max 3 s), niente lampi */
@@ -261,7 +259,7 @@
             <label>Superficie (mq)<input type="number" name="sqm" min="1" inputmode="numeric" /></label>
             <label>Nominativo *<input type="text" name="name" autocomplete="name" required /></label>
             <label class="full">Telefono *<input type="tel" name="phone" autocomplete="tel" required /></label>
-            <label class="check full"><input type="checkbox" name="privacy" required /><span>Ho letto e accetto l'<a href="#privacy">informativa privacy</a> *</span></label>
+            <label class="check full"><input type="checkbox" name="privacy" required /><span>Ho letto e accetto l'<a href="#privacy-policy">informativa privacy</a> *</span></label>
             <div class="send-row full">
               <button type="submit" class="red-btn" data-channel="whatsapp">Invia su WhatsApp</button>
               <button type="submit" class="ghost-btn" data-channel="email">Invia per email</button>
@@ -318,8 +316,15 @@
               </a>
             </div>
             <div class="map-card">
-              <iframe title="Mappa: Via Luosi 154, Modena" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                src="https://maps.google.com/maps?q=Via%20Luosi%20154%2C%2041124%20Modena&z=16&output=embed"></iframe>
+              <div class="map-consent" id="mapConsent">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                <p class="map-address">Via Luosi, 154 · 41124 Modena (MO)</p>
+                <p class="map-note">La mappa è fornita da Google e può usare cookie di terze parti.</p>
+                <div class="map-actions">
+                  <button type="button" class="primary-btn" id="mapLoad">Mostra la mappa</button>
+                  <a class="ghost-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Via%20Luosi%20154%2C%2041124%20Modena" target="_blank" rel="noopener">Apri in Google Maps</a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -338,7 +343,7 @@
               </select>
             </label>
             <label class="full">Messaggio *<textarea name="message" rows="5" required></textarea></label>
-            <label class="check full"><input type="checkbox" name="privacy" required /><span>Ho letto e accetto l'<a href="#privacy">informativa privacy</a> *</span></label>
+            <label class="check full"><input type="checkbox" name="privacy" required /><span>Ho letto e accetto l'<a href="#privacy-policy">informativa privacy</a> *</span></label>
             <label class="full antispam">Antispam: quanto fa 5 meno 2? *<input type="text" name="antispam" inputmode="numeric" required /></label>
             <div class="send-row full">
               <button type="submit" class="red-btn" data-channel="whatsapp">Invia su WhatsApp</button>
@@ -357,7 +362,7 @@
     </main>
 
     <!-- ============ FOOTER ============ -->
-    <footer class="site-footer" id="privacy">
+    <footer class="site-footer">
       <div class="footer-brand">
         <img src="img/logo.webp" alt="Immobiliare eMMe due" width="171" height="57" />
         <p>Via Luosi, 154 · 41124 Modena (MO)</p>
@@ -366,10 +371,10 @@
         <p><strong>Immobiliare eMMedue S.A.S</strong></p>
         <p>P.I. 03957930369 · REA MO-431524</p>
         <p>Tel. <a href="tel:+390598723629">059.8723629</a> · <a href="mailto:info@immobiliare-emmedue.it">info@immobiliare-emmedue.it</a></p>
-        <p><a href="#privacy">Privacy</a> | <a href="#privacy">Cookies</a></p>
+        <p class="legal-links"><a href="#privacy-policy">Privacy</a> | <a href="#cookie-policy">Cookie</a> | <button type="button" class="link-btn" data-cookie-settings>Preferenze cookie</button></p>
       </div>
       <p class="copyright">© <span id="year"></span> Immobiliare eMMedue S.A.S. Tutti i diritti riservati.</p>
-      <a class="wa-float"href="https://wa.me/393286568572" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
+      <a class="wa-float" href="https://wa.me/393286568572" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
         <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.6 0l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>
       </a>
     </footer>
@@ -391,10 +396,90 @@
       </article>
     </div>
 
+    <!-- ============ COOKIE BANNER ============ -->
+    <div class="cookie-banner hidden" id="cookieBanner" role="region" aria-label="Cookie">
+      <button type="button" class="cookie-close" data-consent="reject" aria-label="Chiudi e rifiuta">×</button>
+      <p class="cookie-title">Cookie</p>
+      <p class="cookie-text">Usiamo solo cookie tecnici, necessari al funzionamento del sito. Con il tuo consenso carichiamo anche la mappa di Google, che può usare cookie di terze parti. Puoi cambiare idea in qualsiasi momento da “Preferenze cookie” in fondo alla pagina.</p>
+      <p class="cookie-more"><a href="#cookie-policy">Leggi la cookie policy</a></p>
+      <div class="cookie-actions">
+        <button type="button" class="primary-btn" data-consent="reject">Rifiuta</button>
+        <button type="button" class="primary-btn" data-consent="accept">Accetta</button>
+      </div>
+    </div>
+
+    <!-- ============ INFORMATIVE (privacy / cookie) ============
+         BOZZA: far verificare i testi a un consulente privacy prima della messa online. -->
+    <div class="detail-overlay legal-overlay hidden" id="legal" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+      <article class="legal-card">
+        <button class="detail-close" id="legalClose" type="button" aria-label="Chiudi">×</button>
+
+        <section class="legal-doc" id="doc-privacy" lang="it">
+          <p class="eyebrow">Informativa ai sensi dell'art. 13 del Regolamento UE 2016/679 (GDPR)</p>
+          <h2 id="legalTitle">Privacy policy</h2>
+
+          <h3>Titolare del trattamento</h3>
+          <p>Immobiliare eMMedue S.A.S., Via Luosi 154, 41124 Modena (MO) · P.IVA 03957930369 · REA MO-431524 ·
+            email <a href="mailto:info@immobiliare-emmedue.it">info@immobiliare-emmedue.it</a> · tel. 059.8723629.</p>
+
+          <h3>Quali dati trattiamo</h3>
+          <ul>
+            <li><b>Dati che ci invii tu</b> con i moduli “Scrivici” e “Richiedi la valutazione” o scrivendoci su WhatsApp o per email: nome, email, telefono, messaggio e, per la valutazione, i dati dell'immobile (città, indirizzo, tipologia, superficie).</li>
+            <li><b>Dati di navigazione</b> raccolti automaticamente dai server che ospitano il sito (ad esempio indirizzo IP, data e ora della visita), usati solo per la sicurezza e il corretto funzionamento.</li>
+          </ul>
+          <p>Il sito non memorizza i dati dei moduli: quando premi “Invia”, il messaggio viene aperto già compilato nella tua app WhatsApp o nel tuo programma di posta e sei tu a inviarlo.</p>
+
+          <h3>Perché li trattiamo e su quale base</h3>
+          <ul>
+            <li>Rispondere alle tue richieste, fissare visite, preparare la valutazione del tuo immobile: misure precontrattuali adottate su tua richiesta (art. 6.1.b GDPR).</li>
+            <li>Adempiere a obblighi di legge, ad esempio fiscali e antiriciclaggio, se si arriva a un incarico (art. 6.1.c GDPR).</li>
+          </ul>
+          <p>Non usiamo i tuoi dati per pubblicità o newsletter senza un tuo consenso specifico.</p>
+
+          <h3>Per quanto tempo</h3>
+          <p>Per il tempo necessario a gestire la richiesta e, se non nasce un rapporto, al massimo [__] mesi. Se nasce un incarico, per la durata del rapporto e per i termini previsti dalla legge.</p>
+
+          <h3>Chi può riceverli</h3>
+          <p>Il personale dell'agenzia e i fornitori che ci aiutano a gestire il sito e la posta (ad esempio il fornitore di hosting), nominati responsabili del trattamento. Se ci scrivi su WhatsApp, il servizio è fornito da WhatsApp Ireland Ltd., secondo la sua informativa; alcuni dati possono essere trasferiti fuori dall'UE con le garanzie previste dal GDPR. I dati non vengono diffusi né venduti.</p>
+
+          <h3>I tuoi diritti</h3>
+          <p>Puoi chiedere in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne il trattamento, opporti o riceverli in formato portabile (artt. 15–22 GDPR), scrivendo a <a href="mailto:info@immobiliare-emmedue.it">info@immobiliare-emmedue.it</a>. Puoi anche presentare reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).</p>
+
+          <p class="legal-updated">Ultimo aggiornamento: [data]</p>
+        </section>
+
+        <section class="legal-doc" id="doc-cookie" lang="it">
+          <p class="eyebrow">Informativa sui cookie e sulle tecnologie simili</p>
+          <h2>Cookie policy</h2>
+
+          <h3>Cookie e memoria tecnica</h3>
+          <p>Il sito usa solo la memoria locale del browser (localStorage) per funzioni che hai chiesto tu. Questi dati restano sul tuo dispositivo, non vengono inviati a noi né a terzi e non servono a profilarti, quindi non richiedono consenso.</p>
+          <table class="legal-table">
+            <tr><th>Nome</th><th>A cosa serve</th><th>Durata</th></tr>
+            <tr><td>emmedue-preferiti</td><td>Ricorda gli annunci salvati con il cuore</td><td>Finché non la cancelli</td></tr>
+            <tr><td>emmedue-lingua</td><td>Ricorda la lingua scelta</td><td>Finché non la cancelli</td></tr>
+            <tr><td>emmedue-consenso</td><td>Ricorda la tua scelta sui cookie</td><td>6 mesi</td></tr>
+          </table>
+
+          <h3>Contenuti di terze parti</h3>
+          <ul>
+            <li><b>Google Maps</b> (Google Ireland Ltd.): la mappa viene caricata solo se accetti nel banner o premi “Mostra la mappa”. Da quel momento Google può usare cookie propri, secondo la sua <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">privacy policy</a>.</li>
+            <li><b>Foto di copertina</b>: in questa versione è caricata dal servizio Unsplash, che riceve l'indirizzo IP del visitatore ma non imposta cookie.</li>
+          </ul>
+          <p>Il sito non usa cookie di profilazione né strumenti di statistica. I caratteri tipografici sono ospitati sul sito stesso.</p>
+
+          <h3>Come cambiare la tua scelta</h3>
+          <p>Puoi modificare il consenso in qualsiasi momento con il pulsante <button type="button" class="link-btn" data-cookie-settings>Preferenze cookie</button>, presente anche in fondo a ogni pagina. Puoi inoltre cancellare i dati salvati dalle impostazioni del tuo browser.</p>
+
+          <p class="legal-updated">Ultimo aggiornamento: [data]</p>
+        </section>
+      </article>
+    </div>
 
     <script src="i18n.js"></script>
     <script src="listings.js"></script>
     <script src="app.js"></script>
+    <script src="consent.js"></script>
     <script src="vendor/gsap.min.js"></script>
     <script src="vendor/ScrollTrigger.min.js"></script>
     <script src="vendor/SplitText.min.js"></script>

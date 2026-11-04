@@ -37,7 +37,7 @@
       lenis = new Lenis({
         duration: 1.1,
         smoothWheel: true,
-        prevent: (node) => !!node.closest?.('#detail, .site-nav.open')
+        prevent: (node) => !!node.closest?.('#detail, #legal, .cookie-banner, .site-nav.open')
       });
       window.lenis = lenis;
       lenis.on('scroll', ScrollTrigger.update);
@@ -57,12 +57,9 @@
       });
 
       /* Scheda dettaglio aperta: lo sfondo non scorre */
-      const detail = document.getElementById('detail');
-      if (detail) {
-        new MutationObserver(() => {
-          detail.classList.contains('hidden') ? lenis.start() : lenis.stop();
-        }).observe(detail, { attributes: true, attributeFilter: ['class'] });
-      }
+      const overlays = ['detail', 'legal'].map((id) => document.getElementById(id)).filter(Boolean);
+      const sync = () => (overlays.some((o) => !o.classList.contains('hidden')) ? lenis.stop() : lenis.start());
+      overlays.forEach((o) => new MutationObserver(sync).observe(o, { attributes: true, attributeFilter: ['class'] }));
     }
 
     /* ---------- Hero: SplitText / BlurText ---------- */

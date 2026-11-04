@@ -165,6 +165,19 @@
     'Case in vendita a {town}': ['Houses for sale in {town}', 'Casas en venta en {town}'],
     'Appartamenti a {town}': ['Apartments in {town}', 'Apartamentos en {town}'],
     'Privacy': ['Privacy', 'Privacidad'],
+    /* --- Cookie e informative --- */
+    'Cookie': ['Cookies', 'Cookies'],
+    'Usiamo solo cookie tecnici, necessari al funzionamento del sito. Con il tuo consenso carichiamo anche la mappa di Google, che può usare cookie di terze parti. Puoi cambiare idea in qualsiasi momento da “Preferenze cookie” in fondo alla pagina.':
+      ['We only use technical cookies needed for the site to work. With your consent we also load Google Maps, which may use third-party cookies. You can change your mind at any time from “Cookie settings” at the bottom of the page.',
+       'Solo usamos cookies técnicas, necesarias para el funcionamiento del sitio. Con tu consentimiento también cargamos el mapa de Google, que puede usar cookies de terceros. Puedes cambiar de opinión en cualquier momento desde “Preferencias de cookies” al final de la página.'],
+    'Leggi la cookie policy': ['Read the cookie policy (in Italian)', 'Lee la política de cookies (en italiano)'],
+    'Rifiuta': ['Reject', 'Rechazar'],
+    'Accetta': ['Accept', 'Aceptar'],
+    'Chiudi e rifiuta': ['Close and reject', 'Cerrar y rechazar'],
+    'Preferenze cookie': ['Cookie settings', 'Preferencias de cookies'],
+    'La mappa è fornita da Google e può usare cookie di terze parti.': ['The map is provided by Google and may use third-party cookies.', 'El mapa lo proporciona Google y puede usar cookies de terceros.'],
+    'Mostra la mappa': ['Show the map', 'Mostrar el mapa'],
+    'Apri in Google Maps': ['Open in Google Maps', 'Abrir en Google Maps'],
     'Immobiliare eMMedue S.A.S. Tutti i diritti riservati.': ['Immobiliare eMMedue S.A.S. All rights reserved.', 'Immobiliare eMMedue S.A.S. Todos los derechos reservados.']
   };
 
@@ -192,7 +205,7 @@
   const textNodes = [];
   const attrNodes = [];
   function collect() {
-    const skip = (el) => el.closest('script, style, svg, #listingTrack, #detailBody, #searchedChips, #galleryThumbs');
+    const skip = (el) => el.closest('script, style, svg, #listingTrack, #detailBody, #searchedChips, #galleryThumbs, .legal-doc');
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode: (n) => (norm(n.nodeValue) && !skip(n.parentElement) && T[norm(n.nodeValue)] ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT)
     });

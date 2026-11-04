@@ -58,6 +58,20 @@ Alla messa online, inoltre:
 - aggiungere `<meta property="og:image">` con l'indirizzo completo di una foto (anteprima su WhatsApp/Facebook);
 - aggiungere `robots.txt` e `sitemap.xml`, e registrare il sito su Google Search Console e Google Business Profile.
 
+## Privacy e cookie
+
+- **Banner cookie** (`consent.js`): “Rifiuta” e “Accetta” con lo stesso peso, la X equivale a rifiutare,
+  la scelta vale 6 mesi (linee guida Garante Privacy 2021). “Preferenze cookie” nel footer la riapre.
+- **Google Maps** si carica solo dopo il consenso (o premendo “Mostra la mappa”); prima c'è un riquadro
+  con indirizzo e link a Google Maps.
+- **Carattere Poppins incluso nel sito** (`vendor/fonts/`, licenza OFL): nessuna chiamata a Google Fonts.
+- **Privacy policy e cookie policy** si aprono da `#privacy-policy` e `#cookie-policy`, collegate ai moduli e al footer.
+  Sono **bozze** con i dati dell'agenzia: da far verificare a un consulente privacy e completare
+  (`[__] mesi` di conservazione, `[data]` di aggiornamento).
+- Unico servizio esterno senza consenso: la foto di copertina da Unsplash (nessun cookie). Sostituendola
+  con una foto dell'agenzia in `img/`, il sito non contatta più nessun server esterno finché non si accetta la mappa.
+- `404.html`, `robots.txt` e `sitemap.xml` pronti per la messa online.
+
 ## Qualità (verificata)
 
 - Accessibilità WCAG 2.1 AA: 0 violazioni con axe-core, scheda dettaglio navigabile da tastiera
