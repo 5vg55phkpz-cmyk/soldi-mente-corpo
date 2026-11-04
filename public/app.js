@@ -1,837 +1,496 @@
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --bg: #07121d;
-  --bg-soft: #0e1b2b;
-  --panel: rgba(13, 23, 38, 0.84);
-  --panel-alt: rgba(18, 31, 48, 0.96);
-  --line: rgba(148, 163, 184, 0.12);
-  --text: #edf7ff;
-  --muted: #9db2c9;
-  --green: #34d399;
-  --green-soft: rgba(52, 211, 153, 0.12);
-  --red: #fb7185;
-  --red-soft: rgba(251, 113, 133, 0.12);
-  --blue: #60a5fa;
-  --blue-soft: rgba(96, 165, 250, 0.12);
-  --yellow: #fbbf24;
-  --yellow-soft: rgba(251, 191, 36, 0.12);
-  --violet: #a78bfa;
-  --violet-soft: rgba(167, 139, 250, 0.12);
-  --cyan: #22d3ee;
-  --shadow: 0 18px 35px rgba(2, 6, 14, 0.38);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Inter", sans-serif;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(96, 165, 250, 0.22), transparent 24%),
-    radial-gradient(circle at 90% 0%, rgba(52, 211, 153, 0.18), transparent 24%),
-    linear-gradient(180deg, #081521 0%, #050d18 100%);
-  color: var(--text);
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  border: none;
-  background: none;
-  color: inherit;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.auth-shell {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-.auth-card {
-  width: min(460px, 92vw);
-  background: rgba(10, 20, 32, 0.88);
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  padding: 28px 24px;
-  box-shadow: var(--shadow);
-}
-
-.auth-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 22px;
-}
-
-.auth-header h1 {
-  margin: 0;
-  font-size: clamp(1.6rem, 2vw, 2.1rem);
-}
-
-.auth-toggle {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.mode-btn {
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(148, 163, 184, 0.06);
-  border: 1px solid var(--line);
-  cursor: pointer;
-  color: var(--text);
-}
-
-.mode-btn.active {
-  background: linear-gradient(135deg, var(--blue), var(--green));
-  color: #07131d;
-  font-weight: 700;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.auth-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.auth-form input,
-.transaction-form input,
-.transaction-form select,
-textarea {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: rgba(148, 163, 184, 0.04);
-  color: var(--text);
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.auth-message {
-  min-height: 22px;
-  margin-top: 14px;
-  color: var(--muted);
-}
-
-.app-shell {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  max-width: 1460px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 22px;
-  gap: 22px;
-}
-
-.sidebar,
-.panel,
-.mini-card,
-.summary-card {
-  background: rgba(11, 21, 34, 0.8);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  padding: 22px 18px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 6px 18px;
-}
-
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--green), var(--blue));
-  color: #04151f;
-  font-weight: 800;
-}
-
-.eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.brand h1,
-.topbar h2,
-.section-header h3,
-.panel h3,
-.panel h4 {
-  margin: 0;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.nav-item {
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text);
-  text-align: left;
-  font-weight: 600;
-  padding: 12px 14px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  background: rgba(96, 165, 250, 0.08);
-  border-color: rgba(96, 165, 250, 0.2);
-}
-
-.label {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.mini-card {
-  margin-top: auto;
-  padding: 18px 16px;
-}
-
-.mini-card h3 {
-  font-size: clamp(1.8rem, 3vw, 2.3rem);
-  margin: 10px 0 14px;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(148, 163, 184, 0.12);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.progress-bar span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--green), var(--blue));
-}
-
-small {
-  display: block;
-  color: var(--muted);
-}
-
-.main-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.view {
-  display: none;
-}
-
-.view.active {
-  display: block;
-  animation: fadeIn 0.24s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 12px 6px 0;
-}
-
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logout-btn,
-.pill,
-.tag,
-.primary-btn {
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-.pill {
-  background: rgba(148, 163, 184, 0.06);
-  border: 1px solid var(--line);
-  padding: 10px 14px;
-}
-
-.primary-btn {
-  background: linear-gradient(135deg, var(--blue), var(--green));
-  color: #07131d;
-  padding: 10px 18px;
-  cursor: pointer;
-  border: 1px solid rgba(96, 165, 250, 0.24);
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.primary-btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
-}
-
-.wide {
-  width: 100%;
-}
-
-.logout-btn {
-  background: rgba(251, 113, 133, 0.08);
-  color: var(--red);
-  border: 1px solid rgba(251, 113, 133, 0.18);
-  padding: 11px 14px;
-  cursor: pointer;
-}
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
-  gap: 18px;
-}
-
-.summary-card {
-  padding: 18px 18px 16px;
-  background: linear-gradient(180deg, rgba(17, 26, 42, 0.96), rgba(13, 23, 40, 0.82));
-}
-
-.summary-card .value {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.summary-card h3 {
-  margin: 0;
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
-}
-
-.delta {
-  display: inline-flex;
-  padding: 6px 9px;
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 600;
-}
-
-.delta.green { background: var(--green-soft); color: var(--green); }
-.delta.blue { background: var(--blue-soft); color: var(--blue); }
-.delta.yellow { background: var(--yellow-soft); color: var(--yellow); }
-.delta.red { background: var(--red-soft); color: var(--red); }
-
-.content-grid,
-.bottom-grid,
-.money-grid,
-.mind-grid,
-.body-grid,
-.goal-grid {
-  display: grid;
-  gap: 18px;
-}
-
-.content-grid {
-  grid-template-columns: 1.4fr 1fr 1fr;
-}
-
-.bottom-grid {
-  grid-template-columns: 1.05fr 1.15fr;
-}
-
-.money-grid {
-  grid-template-columns: 1fr 1.4fr;
-}
-
-.mind-grid,
-.body-grid {
-  grid-template-columns: 1fr 1fr;
-}
-
-.goal-grid {
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-}
-
-.panel {
-  padding: 18px 18px 20px;
-}
-
-.large-panel {
-  min-height: 260px;
-}
-
-.panel-header,
-.section-header,
-.list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.panel-header {
-  margin-bottom: 18px;
-}
-
-.section-header {
-  margin-bottom: 18px;
-}
-
-.tag {
-  padding: 7px 10px;
-  font-size: 0.74rem;
-  border: 1px solid rgba(148, 163, 184, 0.12);
-}
-
-.tag.success { background: var(--green-soft); color: var(--green); }
-.tag.warning { background: var(--yellow-soft); color: var(--yellow); }
-.tag.neutral { background: rgba(148, 163, 184, 0.05); color: var(--text); }
-
-.metric-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.metric-row label,
-.bar-group span,
-.stat-subtitle {
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.metric-row strong {
-  font-size: 1.42rem;
-}
-
-.bars {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.bar-group {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 14px;
-  align-items: center;
-}
-
-.bar-track {
-  width: 100%;
-  height: 10px;
-  background: rgba(148, 163, 184, 0.1);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.bar {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-}
-
-.fill-green { background: linear-gradient(90deg, var(--green), #4ade80); }
-.fill-red { background: linear-gradient(90deg, var(--red), #fda4af); }
-.fill-blue { background: linear-gradient(90deg, var(--blue), #93c5fd); }
-
-.checklist,
-.transaction-list,
-.habit-list,
-.goal-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.checklist li,
-.habit-item,
-.transaction-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.dot-emerald { background: var(--green); }
-.dot-gold { background: var(--yellow); }
-.dot-blue { background: var(--blue); }
-.dot-red { background: var(--red); }
-.dot-violet { background: var(--violet); }
-.dot-cyan { background: var(--cyan); }
-
-.priority-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.priority-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(148, 163, 184, 0.08);
-  background: rgba(148, 163, 184, 0.03);
-}
-
-.priority-main {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.priority-badge {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--green);
-}
-
-.priority-item p {
-  margin: 0 0 3px;
-  font-weight: 600;
-}
-
-.priority-item small {
-  color: var(--muted);
-}
-
-.priority-value {
-  font-weight: 700;
-}
-
-.chart-wrap {
-  height: 180px;
-  display: flex;
-  align-items: flex-end;
-}
-
-.chart-bars {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.chart-bar {
-  flex: 1;
-  min-height: 25px;
-  border-radius: 12px 12px 0 0;
-  position: relative;
-  background: linear-gradient(180deg, rgba(96, 165, 250, 0.85), rgba(52, 211, 153, 0.8));
-}
-
-.chart-bar::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: -24px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--muted);
-  font-size: 0.72rem;
-}
-
-.money-grid .panel,
-.mind-grid .panel,
-.body-grid .panel,
-.goal-card {
-  background: linear-gradient(180deg, rgba(17, 26, 42, 0.96), rgba(11, 21, 34, 0.82));
-}
-
-.donut-wrap {
-  display: flex;
-  justify-content: center;
-  padding: 12px 0 18px;
-}
-
-.donut-chart {
-  --progress: 50;
-  --accent: var(--green);
-  position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: conic-gradient(var(--accent) calc(var(--progress) * 1%), rgba(148, 163, 184, 0.08) 0);
-}
-
-.donut-chart::before {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border-radius: 50%;
-  background: rgba(14, 23, 38, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.08);
-}
-
-.donut-inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-}
-
-.donut-inner strong {
-  font-size: 1.8rem;
-}
-
-.full-span {
-  grid-column: 1 / -1;
-}
-
-.transaction-list,
-.habit-list {
-  margin-top: 14px;
-}
-
-.transaction-item {
-  padding: 12px 10px;
-  border-radius: 12px;
-  background: rgba(148, 163, 184, 0.04);
-  border: 1px solid rgba(148, 163, 184, 0.08);
-}
-
-.transaction-item .meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.transaction-item strong {
-  font-size: 0.98rem;
-}
-
-.transaction-item small,
-.transaction-item .amount {
-  color: var(--muted);
-}
-
-.transaction-item.income .amount {
-  color: var(--green);
-}
-
-.transaction-item.expense .amount {
-  color: var(--red);
-}
-
-.transaction-form {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
-  gap: 16px;
-  margin-top: 18px;
-}
-
-.transaction-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 120px;
-  margin-top: 14px;
-}
-
-.score-block {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.score-label {
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-.score-block strong {
-  font-size: 2rem;
-}
-
-.score-rail {
-  width: 100%;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(148, 163, 184, 0.08);
-  overflow: hidden;
-}
-
-.score-rail span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--blue), var(--green));
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 140px;
-}
-
-.stat-card strong {
-  font-size: 2.2rem;
-  margin: 10px 0 8px;
-}
-
-.goal-card {
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-.goal-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.goal-card .goal-badge {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.goal-progress {
-  width: 100%;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(148, 163, 184, 0.08);
-  overflow: hidden;
-  margin: 12px 0 8px;
-}
-
-.goal-progress span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-}
-
-.goal-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-@media (max-width: 1100px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .summary-grid,
-  .content-grid,
-  .bottom-grid,
-  .money-grid,
-  .mind-grid,
-  .body-grid,
-  .goal-grid,
-  .transaction-form {
-    grid-template-columns: 1fr 1fr;
+const STORAGE_KEY = 'smc-auth-token';
+const USER_KEY = 'smc-user-name';
+let authMode = 'login';
+let dashboardState = null;
+
+const landing = document.getElementById('landing');
+const authScreen = document.getElementById('authScreen');
+const appShell = document.getElementById('appShell');
+const authForm = document.getElementById('authForm');
+const authMessage = document.getElementById('authMessage');
+const userLabel = document.getElementById('userLabel');
+
+/* ---------------- Helpers ---------------- */
+const euro = (value) => `€${Number(value || 0).toLocaleString('it-IT')}`;
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[char]);
+}
+
+function storage(action, key, value) {
+  try {
+    if (action === 'get') return localStorage.getItem(key);
+    if (action === 'set') return localStorage.setItem(key, value);
+    return localStorage.removeItem(key);
+  } catch {
+    return null;
   }
 }
 
-@media (max-width: 760px) {
-  .app-shell {
-    padding: 18px 14px;
+const getToken = () => storage('get', STORAGE_KEY);
+const setToken = (token) => storage('set', STORAGE_KEY, token);
+const clearToken = () => storage('remove', STORAGE_KEY);
+
+function showMessage(message, isError = false) {
+  authMessage.textContent = message;
+  authMessage.className = `auth-message ${isError ? 'error' : 'ok'}`;
+}
+
+/* ---------------- Landing ---------------- */
+const PROGRAMS = [
+  {
+    area: 'Soldi', title: 'Fondo emergenza', place: 'Risparmio guidato · 12 settimane',
+    users: '4,2K', level: 'Base', price: 'Gratis',
+    image: 'photo-1579621970563-ebec7560ff3e', tone: ['#2f7a5f', '#14263f']
+  },
+  {
+    area: 'Mente', title: 'Mindfulness 21 giorni', place: 'Meditazione · 15 min al giorno',
+    users: '3,8K', level: 'Base', price: 'Gratis',
+    image: 'photo-1506126613408-eca07ce68773', tone: ['#3d6597', '#14263f']
+  },
+  {
+    area: 'Corpo', title: 'Corpo in forma', place: 'Allenamento a casa · 8 settimane',
+    users: '5,1K', level: 'Medio', price: '€ 9,90',
+    image: 'photo-1571019613454-1cb2f99b2d8b', tone: ['#b8742a', '#14263f']
+  },
+  {
+    area: 'Soldi', title: 'Budget zero stress', place: 'Spese e categorie · 4 settimane',
+    users: '2,6K', level: 'Base', price: 'Gratis',
+    image: 'photo-1554224155-6726b3ff858f', tone: ['#2f7a5f', '#1c3557']
+  },
+  {
+    area: 'Mente', title: 'Lettura profonda', place: 'Focus · 20 min prima di dormire',
+    users: '1,9K', level: 'Base', price: '€ 4,90',
+    image: 'photo-1512820790803-83ca734da794', tone: ['#6d5bb8', '#14263f']
+  },
+  {
+    area: 'Corpo', title: 'Primi 5 km', place: 'Corsa · 10 settimane',
+    users: '3,3K', level: 'Medio', price: '€ 7,90',
+    image: 'photo-1476480862126-209bfaa8edc8', tone: ['#c0573f', '#14263f']
+  }
+];
+
+const GOALS = {
+  soldi: ['Risparmiare di più', 'Ridurre le spese', 'Fondo emergenza'],
+  mente: ['Più concentrazione', 'Meno stress', 'Leggere di più'],
+  corpo: ['Rimettersi in forma', 'Dormire meglio', 'Camminare di più']
+};
+
+const icon = {
+  users: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 4a4 4 0 0 1 0 8M22 21c0-3-2-5-4-5.6"/></svg>',
+  level: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V14M10 20V9M16 20V4"/></svg>'
+};
+
+function renderPrograms() {
+  const track = document.getElementById('programTrack');
+  track.innerHTML = PROGRAMS.map((p) => `
+    <button class="program-card" type="button" data-open-auth="register" aria-label="${esc(p.title)}: inizia il programma">
+      <div class="program-photo" style="background-image:
+        url('https://images.unsplash.com/${p.image}?auto=format&fit=crop&w=700&q=75'),
+        linear-gradient(140deg, ${p.tone[0]}, ${p.tone[1]});">
+        <span class="area-chip">${esc(p.area)}</span>
+      </div>
+      <div class="program-meta">
+        <span>${esc(p.place)}</span>
+        <span>${icon.users}${p.users}</span>
+        <span>${icon.level}${p.level}</span>
+      </div>
+      <h3>${esc(p.title)}</h3>
+      <p class="program-price">${esc(p.price)} <small>/ programma</small></p>
+    </button>
+  `).join('');
+  setupDots(track);
+}
+
+function setupDots(track) {
+  const dots = document.getElementById('programDots');
+
+  const pageCount = () => Math.max(1, Math.ceil(track.scrollWidth / track.clientWidth - 0.05));
+
+  const build = () => {
+    const pages = pageCount();
+    dots.innerHTML = Array.from({ length: pages }, (_, i) =>
+      `<button type="button" role="tab" aria-label="Pagina ${i + 1}" data-page="${i}"></button>`
+    ).join('');
+    dots.hidden = pages < 2;
+    sync();
+  };
+
+  const sync = () => {
+    const pages = pageCount();
+    const max = track.scrollWidth - track.clientWidth;
+    const index = max <= 0 ? 0 : Math.round((track.scrollLeft / max) * (pages - 1));
+    dots.querySelectorAll('button').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+      dot.setAttribute('aria-selected', String(i === index));
+    });
+  };
+
+  dots.addEventListener('click', (event) => {
+    const page = event.target.closest('button')?.dataset.page;
+    if (page === undefined) return;
+    track.scrollTo({ left: Number(page) * track.clientWidth, behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  window.addEventListener('resize', build);
+  build();
+}
+
+function fillGoals(area) {
+  document.getElementById('finderGoal').innerHTML = GOALS[area]
+    .map((goal) => `<option>${esc(goal)}</option>`)
+    .join('');
+}
+
+function initLanding() {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderPrograms();
+
+  const finder = document.getElementById('finder');
+  fillGoals(finder.area.value);
+  finder.area.addEventListener('change', () => fillGoals(finder.area.value));
+  finder.addEventListener('submit', (event) => {
+    event.preventDefault();
+    openAuth('register', `Ottima scelta: ${finder.goal.value.toLowerCase()}. Crea l'account per iniziare.`);
+  });
+
+  document.getElementById('heroSearch').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const q = event.target.q.value.trim().toLowerCase();
+    const area = Object.keys(GOALS).find((key) => q.includes(key)) || 'soldi';
+    finder.area.value = area;
+    fillGoals(area);
+    document.getElementById('programmi').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.querySelector('.site-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', (event) => {
+    if (!event.target.closest('a')) return;
+    nav.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    nav.querySelectorAll('a').forEach((a) => a.classList.toggle('active', a === event.target));
+  });
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-open-auth]');
+    if (!trigger) return;
+    event.preventDefault();
+    openAuth(trigger.dataset.openAuth);
+  });
+
+  document.getElementById('authClose').addEventListener('click', closeAuth);
+  authScreen.addEventListener('click', (event) => {
+    if (event.target === authScreen) closeAuth();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !authScreen.classList.contains('hidden')) closeAuth();
+  });
+}
+
+function openAuth(mode = 'login', message = '') {
+  setAuthMode(mode);
+  authMessage.textContent = message;
+  authMessage.className = 'auth-message ok';
+  authScreen.classList.remove('hidden');
+  authForm.username.focus();
+}
+
+function closeAuth() {
+  authScreen.classList.add('hidden');
+}
+
+function showLanding() {
+  appShell.classList.add('hidden');
+  landing.classList.remove('hidden');
+}
+
+function showApp() {
+  closeAuth();
+  landing.classList.add('hidden');
+  appShell.classList.remove('hidden');
+  window.scrollTo(0, 0);
+}
+
+/* ---------------- Auth & API ---------------- */
+function setAuthMode(mode) {
+  authMode = mode;
+  document.querySelectorAll('.mode-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  const isRegister = mode === 'register';
+  authForm.querySelector('button[type="submit"]').textContent = isRegister ? 'Crea account' : 'Entra';
+  authForm.password.autocomplete = isRegister ? 'new-password' : 'current-password';
+}
+
+async function request(url, options = {}, requireAuth = true) {
+  const headers = { ...(options.headers || {}), 'Content-Type': 'application/json' };
+
+  if (requireAuth) {
+    const token = getToken();
+    if (!token) throw new Error('Sessione scaduta, accedi di nuovo.');
+    headers.Authorization = `Bearer ${token}`;
   }
 
-  .summary-grid,
-  .content-grid,
-  .bottom-grid,
-  .money-grid,
-  .mind-grid,
-  .body-grid,
-  .goal-grid,
-  .transaction-form {
-    grid-template-columns: 1fr;
+  const response = await fetch(url, { ...options, headers });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.error || 'Errore di richiesta');
+  return payload;
+}
+
+async function loginOrRegister(event) {
+  event.preventDefault();
+  const username = authForm.username.value.trim();
+  const password = authForm.password.value;
+
+  if (!username || !password) {
+    showMessage('Inserisci username e password.', true);
+    return;
   }
 
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .topbar-actions {
-    width: 100%;
-    justify-content: space-between;
+  try {
+    const path = authMode === 'register' ? '/api/register' : '/api/login';
+    const payload = await request(path, { method: 'POST', body: JSON.stringify({ username, password }) }, false);
+    setToken(payload.token);
+    storage('set', USER_KEY, payload.user.username);
+    authForm.reset();
+    await loadDashboard();
+  } catch (error) {
+    showMessage(error.message, true);
   }
 }
 
+async function loadDashboard() {
+  try {
+    const payload = await request('/api/dashboard');
+    dashboardState = payload.dashboard;
+    userLabel.textContent = storage('get', USER_KEY) || 'Account';
+    renderDashboard();
+    showApp();
+  } catch (error) {
+    clearToken();
+    showLanding();
+    openAuth('login');
+    showMessage(error.message, true);
+  }
+}
+
+/* ---------------- Dashboard ---------------- */
+function listItems(items) {
+  return (items || []).map((item) => `
+    <li><span class="dot ${esc(item.color)}"></span>${esc(item.label)}</li>
+  `).join('');
+}
+
+function habitItems(items) {
+  return items.map((item) => `
+    <li class="habit-item"><span>${esc(item.label)}</span><strong>${esc(item.value)}</strong></li>
+  `).join('');
+}
+
+function renderDashboard() {
+  if (!dashboardState) return;
+  const data = dashboardState;
+  const money = data.money || {};
+
+  const summaryCards = [
+    { label: 'Saldo', value: euro(money.saving), delta: `+${euro(money.gain)}`, tone: 'green' },
+    { label: 'Focus', value: `${Number(data.focus || 0)}%`, delta: '+8%', tone: 'blue' },
+    { label: 'Allenamenti', value: '4/5', delta: '+1', tone: 'yellow' },
+    { label: 'Sonno', value: data.sleep || '7h 20m', delta: '+35m', tone: 'green' }
+  ];
+
+  document.getElementById('summaryCards').innerHTML = summaryCards.map((item) => `
+    <article class="summary-card">
+      <p class="label">${item.label}</p>
+      <div class="value"><h3>${esc(item.value)}</h3><span class="delta ${item.tone}">${esc(item.delta)}</span></div>
+    </article>
+  `).join('');
+
+  document.getElementById('moneyGainTag').textContent = `+${euro(money.gain)}`;
+  document.getElementById('incomeValue').textContent = euro(money.income);
+  document.getElementById('expenseValue').textContent = euro(money.expense);
+  document.getElementById('savingValue').textContent = euro(money.saving);
+
+  document.getElementById('incomeBar').style.width = `${Math.min(((money.income || 0) / 3500) * 100, 100)}%`;
+  document.getElementById('expenseBar').style.width = `${Math.min(((money.expense || 0) / 3000) * 100, 100)}%`;
+  document.getElementById('goalBar').style.width = `${Math.min(Number(money.goal || 80), 100)}%`;
+
+  document.getElementById('focusTag').textContent = `${Number(data.focus || 0)}/100`;
+  document.getElementById('stepsTag').textContent = `${Number(data.steps || 0).toLocaleString('it-IT')} passi`;
+  document.getElementById('mindList').innerHTML = listItems(data.mind);
+  document.getElementById('bodyList').innerHTML = listItems(data.body);
+
+  document.getElementById('priorityList').innerHTML = (data.priorities || []).map((item) => `
+    <div class="priority-item">
+      <div class="priority-main">
+        <span class="priority-badge"></span>
+        <div><p>${esc(item.title)}</p><small>${esc(item.detail)}</small></div>
+      </div>
+      <span class="priority-value">${esc(item.value)}</span>
+    </div>
+  `).join('');
+
+  const labels = data.labels || ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
+  document.getElementById('trendChart').innerHTML = (data.trend || [48, 58, 64, 72, 81, 76, 90])
+    .map((value, i) => `<div class="chart-bar" style="height:${Number(value)}%" data-label="${esc(labels[i])}"></div>`)
+    .join('');
+
+  const month = Number(data.monthProgress || 0);
+  document.getElementById('monthProgressValue').textContent = `${month}%`;
+  document.getElementById('monthProgressBar').style.width = `${month}%`;
+
+  const budget = money.budget || 3300;
+  const budgetUsed = Math.round(Math.min(((money.expense || 0) / budget) * 100, 100));
+  document.getElementById('budgetDonut').style.setProperty('--progress', budgetUsed);
+  document.getElementById('budgetDonutValue').textContent = `${budgetUsed}%`;
+  document.getElementById('budgetContext').textContent = `${euro(money.expense)} / ${euro(budget)}`;
+
+  const transactions = money.transactions || [];
+  document.getElementById('transactionList').innerHTML = transactions.length
+    ? transactions.slice(0, 6).map((entry) => `
+      <li class="transaction-item ${entry.type === 'income' ? 'income' : 'expense'}">
+        <div class="meta"><strong>${esc(entry.category)}</strong><small>${entry.type === 'income' ? 'Entrata' : 'Spesa'}</small></div>
+        <span class="amount">${entry.type === 'income' ? '+' : '-'}${euro(entry.amount)}</span>
+      </li>`).join('')
+    : '<li class="muted">Nessun movimento ancora. Aggiungine uno qui sotto.</li>';
+
+  document.getElementById('mindScoreValue').textContent = `${Number(data.focus || 0)}%`;
+  document.getElementById('mindScoreBar').style.width = `${Number(data.focus || 0)}%`;
+  const note = document.getElementById('dailyNote');
+  if (document.activeElement !== note) note.value = data.dailyNote || '';
+  document.getElementById('stepsDisplay').textContent = Number(data.steps || 0).toLocaleString('it-IT');
+  document.getElementById('sleepDisplay').textContent = data.sleep || '7h 20m';
+
+  document.getElementById('bodyActivities').innerHTML = habitItems([
+    { label: 'Allenamento cardio', value: '45 min' },
+    { label: 'Passeggiata mattutina', value: '30 min' },
+    { label: 'Stretching serale', value: '10 min' }
+  ]);
+  document.getElementById('mindRoutineList').innerHTML = habitItems([
+    { label: 'Meditazione guidata', value: '15 min' },
+    { label: 'Lettura approfondita', value: '20 min' },
+    { label: 'Hobby creativo', value: '30 min' }
+  ]);
+
+  document.getElementById('goalGrid').innerHTML = (data.goals || []).map((goal) => `
+    <article class="goal-card">
+      <div class="goal-card-header">
+        <div><span class="goal-badge" style="background:${esc(goal.color)}"></span><h4>${esc(goal.name)}</h4></div>
+        <span class="tag neutral">${Number(goal.progress)}%</span>
+      </div>
+      <div class="goal-progress"><span style="width:${Number(goal.progress)}%; background:${esc(goal.color)}"></span></div>
+      <div class="goal-meta"><span>${esc(goal.amount)}</span><span>${Number(goal.target)}%</span></div>
+    </article>
+  `).join('');
+}
+
+async function updateDashboard(payload) {
+  const data = await request('/api/dashboard', { method: 'POST', body: JSON.stringify(payload) });
+  dashboardState = data.dashboard;
+  renderDashboard();
+}
+
+async function addTransaction(event) {
+  event.preventDefault();
+  const form = event.target;
+  const type = form.type.value;
+  const category = form.category.value.trim();
+  const amount = Number(form.amount.value);
+  if (!category || !amount || amount <= 0) return;
+
+  const data = await request('/api/transactions', {
+    method: 'POST',
+    body: JSON.stringify({ type, category, amount })
+  });
+  dashboardState = data.dashboard;
+  renderDashboard();
+  form.reset();
+}
+
+async function refreshData() {
+  const minutes = Math.floor(Math.random() * 60);
+  await updateDashboard({
+    monthProgress: 68 + Math.floor(Math.random() * 22),
+    focus: 78 + Math.floor(Math.random() * 18),
+    steps: 7200 + Math.floor(Math.random() * 2800),
+    sleep: `${6 + Math.floor(Math.random() * 2)}h ${String(minutes).padStart(2, '0')}m`,
+    trend: Array.from({ length: 7 }, () => 35 + Math.floor(Math.random() * 55)),
+    goals: (dashboardState?.goals || []).map((goal) => ({
+      ...goal,
+      progress: Math.min(100, Math.max(35, goal.progress + (Math.random() > 0.5 ? 8 : -6)))
+    }))
+  });
+}
+
+function logout() {
+  clearToken();
+  storage('remove', USER_KEY);
+  dashboardState = null;
+  showLanding();
+  window.scrollTo(0, 0);
+}
+
+function initDashboardEvents() {
+  authForm.addEventListener('submit', loginOrRegister);
+  document.querySelectorAll('.mode-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setAuthMode(btn.dataset.mode);
+      authMessage.textContent = '';
+    });
+  });
+
+  document.querySelectorAll('.nav-item').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach((btn) => btn.classList.toggle('active', btn === button));
+      document.querySelectorAll('.view').forEach((section) => {
+        section.classList.toggle('active', section.id === button.dataset.view);
+      });
+    });
+  });
+
+  document.getElementById('transactionForm').addEventListener('submit', (e) => addTransaction(e).catch(console.error));
+  document.getElementById('refreshDataBtn').addEventListener('click', () => refreshData().catch(console.error));
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+
+  const noteStatus = document.getElementById('noteStatus');
+  let noteTimer;
+  document.getElementById('dailyNote').addEventListener('input', (event) => {
+    clearTimeout(noteTimer);
+    noteStatus.textContent = 'Modifiche non salvate…';
+    noteTimer = setTimeout(async () => {
+      try {
+        await updateDashboard({ dailyNote: event.target.value });
+        noteStatus.textContent = 'Salvato';
+      } catch {
+        noteStatus.textContent = 'Errore nel salvataggio';
+      }
+    }, 600);
+  });
+}
+
+async function bootstrap() {
+  initLanding();
+  initDashboardEvents();
+  setAuthMode('login');
+
+  if (getToken()) {
+    try {
+      const payload = await request('/api/me');
+      storage('set', USER_KEY, payload.user.username);
+      await loadDashboard();
+    } catch {
+      clearToken();
+      showLanding();
+    }
+  }
+}
+
+bootstrap();
