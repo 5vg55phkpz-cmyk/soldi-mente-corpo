@@ -20,6 +20,15 @@ Modifica `listings.js`: ogni annuncio è un blocco `{ ... }` con tipologia, cont
 comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) e foto
 (in `img/`). I campi `null` non vengono mostrati.
 
+## Animazioni
+
+- **GSAP 3.13** (con ScrollTrigger e SplitText) e **Lenis 1.1.13** per lo scorrimento fluido,
+  inclusi nella cartella `vendor/` (il sito funziona anche senza internet).
+- Tutte le animazioni sono in `motion.js`. Effetti ispirati a **React Bits**, riscritti senza React
+  (il sito non usa React): SplitText/BlurText sul titolo, Magnet sui pulsanti, SpotlightCard sulle card.
+- Chi ha attivato "riduci movimento" nel telefono o nel computer non vede animazioni né scorrimento fluido.
+- Le animazioni usano solo l'opacità: i contenuti restano sempre leggibili dagli screen reader.
+
 ## Traduzioni
 
 Tutti i testi tradotti sono in `i18n.js` (voce italiana → inglese, spagnolo). Per un annuncio,

@@ -1560,6 +1560,68 @@ button {
   box-shadow: 0 0 0 3px rgba(212, 44, 34, 0.14) !important;
 }
 
+/* ---------- Motion (GSAP / Lenis / effetti React Bits) ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+html.motion .hero-media {
+  animation: none;
+}
+
+html.motion-pending .site-header,
+html.motion-pending .hero-content,
+html.motion-pending .finder {
+  visibility: hidden;
+}
+
+.split-word {
+  will-change: transform, filter;
+}
+
+/* SpotlightCard */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(45, 108, 192, 0.14), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+.info-card.spotlight::before {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.12), transparent 60%);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .carousel-track {

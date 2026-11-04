@@ -230,7 +230,28 @@
     document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
   }
 
-  window.I18N = { t, setLang, get lang() { return lang; } };
+  /* Dopo che un'animazione ha ricostruito un elemento (es. SplitText.revert),
+     ritrova i suoi testi traducibili, in qualunque lingua siano mostrati */
+  let REV = null;
+  function rescan(root) {
+    if (!root) return;
+    if (!REV) {
+      REV = {};
+      Object.entries(T).forEach(([it, tr]) => { REV[it] = it; tr.forEach((x) => { REV[norm(x)] = it; }); });
+    }
+    for (let i = textNodes.length - 1; i >= 0; i--) if (!textNodes[i].n.isConnected) textNodes.splice(i, 1);
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) {
+      const n = w.currentNode;
+      const key = REV[norm(n.nodeValue)];
+      if (!key || textNodes.some((x) => x.n === n)) continue;
+      const m = n.nodeValue.match(/^(\s*)([\s\S]*?)(\s*)$/);
+      textNodes.push({ n, key, pre: m[1], post: m[3] });
+      n.nodeValue = m[1] + t(key) + m[3];
+    }
+  }
+
+  window.I18N = { t, setLang, rescan, get lang() { return lang; } };
 
   document.addEventListener('DOMContentLoaded', () => {
     collect();
