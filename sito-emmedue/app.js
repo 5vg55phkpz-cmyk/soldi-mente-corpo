@@ -6,6 +6,9 @@
   const listings = window.LISTINGS || [];
   const towns = window.TOWNS || [];
   const $ = (sel) => document.querySelector(sel);
+  const t = (it, vars) => (window.I18N ? window.I18N.t(it, vars) : it);
+  const titleOf = (l) => t(`{type} in ${l.contract.toLowerCase()}`, { type: t(l.type) });
+  const localized = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? v[window.I18N?.lang] || v.it : v);
 
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const euro = (n) => `${Number(n).toLocaleString('it-IT', { useGrouping: 'always' })} €`;
@@ -34,9 +37,9 @@
   function cardHtml(l) {
     const place = l.zone ? `${l.town} · ${l.zone}` : l.town;
     const stats = [
-      l.rooms != null && `<span title="Camere">${icons.bed}${l.rooms}</span>`,
-      l.baths != null && `<span title="Bagni">${icons.bath}${l.baths}</span>`,
-      l.sqm != null && `<span title="Superficie">${icons.area}${l.sqm} mq</span>`
+      l.rooms != null && `<span title="${t('Camere')}">${icons.bed}${l.rooms}</span>`,
+      l.baths != null && `<span title="${t('Bagni')}">${icons.bath}${l.baths}</span>`,
+      l.sqm != null && `<span title="${t('Superficie')}">${icons.area}${l.sqm} ${t('mq')}</span>`
     ].filter(Boolean).join('');
     const drop = l.oldPrice && l.oldPrice > l.price
       ? `<span class="price-drop">${icons.down}-${(((l.oldPrice - l.price) / l.oldPrice) * 100).toFixed(1).replace('.', ',')}% <s>${euro(l.oldPrice)}</s></span>`
@@ -46,18 +49,18 @@
     return `
       <article class="listing-card">
         <div class="listing-photo" data-detail="${esc(l.id)}">
-          <img src="${esc(l.images[0])}" alt="${esc(`${l.type} in ${l.contract.toLowerCase()} a ${place}`)}" loading="lazy" />
-          <span class="badge">${esc(l.contract)}</span>
+          <img src="${esc(l.images[0])}" alt="${esc(t('{type} a {place}', { type: titleOf(l), place }))}" loading="lazy" />
+          <span class="badge">${esc(t(l.contract))}</span>
           <button class="fav-btn${isFav ? ' active' : ''}" type="button" data-fav="${esc(l.id)}"
-            aria-pressed="${isFav}" aria-label="${isFav ? 'Rimuovi dai' : 'Aggiungi ai'} preferiti">${icons.heart}</button>
+            aria-pressed="${isFav}" aria-label="${t(isFav ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti')}">${icons.heart}</button>
         </div>
         <div class="listing-body">
           <p class="listing-place">${esc(place)}</p>
-          <h3><button type="button" class="title-btn" data-detail="${esc(l.id)}">${esc(l.type)} in ${esc(l.contract.toLowerCase())}</button></h3>
+          <h3><button type="button" class="title-btn" data-detail="${esc(l.id)}">${esc(titleOf(l))}</button></h3>
           ${stats ? `<div class="listing-stats">${stats}</div>` : ''}
           <div class="listing-foot">
             <p class="listing-price">${euro(l.price)} ${drop}</p>
-            <button class="info-link" type="button" data-detail="${esc(l.id)}">Dettagli</button>
+            <button class="info-link" type="button" data-detail="${esc(l.id)}">${t('Dettagli')}</button>
           </div>
         </div>
       </article>`;
@@ -74,15 +77,15 @@
     );
     if (showOnlyFavs) list = list.filter((l) => favs.has(l.id));
 
-    $('#listingsTitle').textContent = showOnlyFavs ? 'I tuoi preferiti' : active ? 'Risultati della ricerca' : 'Ultimi inseriti';
+    $('#listingsTitle').textContent = t(showOnlyFavs ? 'I tuoi preferiti' : active ? 'Risultati della ricerca' : 'Ultimi inseriti');
     $('#resetRow').classList.toggle('hidden', !(active || showOnlyFavs));
 
     track.innerHTML = list.length
       ? list.map(cardHtml).join('')
       : `<div class="empty">
-          <h3>${showOnlyFavs ? 'Nessun preferito salvato' : 'Nessun immobile trovato'}</h3>
-          <p>${showOnlyFavs ? 'Tocca il cuore su un annuncio per salvarlo qui.' : 'Non trovi quello che cerchi? Scrivici e lo cerchiamo noi per te.'}</p>
-          ${showOnlyFavs ? '' : '<a class="primary-btn" href="#contatti" data-purpose="Cerco un immobile">Richiedi</a>'}
+          <h3>${t(showOnlyFavs ? 'Nessun preferito salvato' : 'Nessun immobile trovato')}</h3>
+          <p>${t(showOnlyFavs ? 'Tocca il cuore su un annuncio per salvarlo qui.' : 'Non trovi quello che cerchi? Scrivici e lo cerchiamo noi per te.')}</p>
+          ${showOnlyFavs ? '' : `<a class="primary-btn" href="#contatti" data-purpose="Cerco un immobile">${t('Richiedi')}</a>`}
         </div>`;
     track.scrollLeft = 0;
     buildDots();
@@ -100,7 +103,7 @@
   function buildDots() {
     const pages = pageCount();
     dots.innerHTML = Array.from({ length: pages }, (_, i) =>
-      `<button type="button" role="tab" aria-label="Pagina ${i + 1}" data-page="${i}"></button>`).join('');
+      `<button type="button" role="tab" aria-label="${t('Pagina {n}', { n: i + 1 })}" data-page="${i}"></button>`).join('');
     dots.hidden = pages < 2;
     syncDots();
   }
@@ -136,7 +139,7 @@
       const on = favs.has(id);
       btn.classList.toggle('active', on);
       btn.setAttribute('aria-pressed', String(on));
-      btn.setAttribute('aria-label', `${on ? 'Rimuovi dai' : 'Aggiungi ai'} preferiti`);
+      btn.setAttribute('aria-label', t(on ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'));
     }
   });
 
@@ -153,7 +156,7 @@
     photo = (i + imgs.length) % imgs.length;
     const img = $('#galleryImg');
     img.src = imgs[photo];
-    img.alt = `${current.type} a ${placeOf(current)}, foto ${photo + 1} di ${imgs.length}`;
+    img.alt = `${t('{type} a {place}', { type: titleOf(current), place: placeOf(current) })}, ${t('foto {n} di {tot}', { n: photo + 1, tot: imgs.length })}`;
     $('#galleryCount').textContent = `${photo + 1} / ${imgs.length}`;
     $('#galleryThumbs').querySelectorAll('button').forEach((b, j) => b.classList.toggle('active', j === photo));
   }
@@ -166,7 +169,7 @@
     detail.querySelectorAll('.gallery-nav, .gallery-count').forEach((el) => { el.hidden = !multi; });
     $('#galleryThumbs').hidden = !multi;
     $('#galleryThumbs').innerHTML = l.images.map((src, i) =>
-      `<button type="button" data-photo="${i}" aria-label="Foto ${i + 1}"><img src="${esc(src)}" alt="" /></button>`).join('');
+      `<button type="button" data-photo="${i}" aria-label="${t('Foto {n}', { n: i + 1 })}"><img src="${esc(src)}" alt="" /></button>`).join('');
 
     const facts = [
       ['Superficie', l.sqm != null && `${l.sqm} m²`],
@@ -179,16 +182,16 @@
     const msg = `Buongiorno, vorrei informazioni su: ${l.type} in ${l.contract.toLowerCase()} a ${placeOf(l)}, ${euro(l.price)}.`;
 
     $('#detailBody').innerHTML = `
-      <p class="listing-place">${esc(l.category)} · ${esc(placeOf(l))}</p>
-      <h2 id="detailTitle">${esc(l.type)} in ${esc(l.contract.toLowerCase())}</h2>
+      <p class="listing-place">${esc(t(l.category))} · ${esc(placeOf(l))}</p>
+      <h2 id="detailTitle">${esc(titleOf(l))}</h2>
       <p class="detail-price">${euro(l.price)} ${drop}</p>
-      ${facts.length ? `<dl class="facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
-      ${l.description ? `<p class="detail-desc">${esc(l.description)}</p>` : ''}
-      ${l.features?.length ? `<ul class="features">${l.features.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
+      ${facts.length ? `<dl class="facts">${facts.map(([k, v]) => `<div><dt>${t(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
+      ${l.description ? `<p class="detail-desc">${esc(localized(l.description))}</p>` : ''}
+      ${l.features?.length ? `<ul class="features">${l.features.map((f) => `<li>${esc(t(f))}</li>`).join('')}</ul>` : ''}
       <div class="detail-actions">
-        <a class="red-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chiedi info su WhatsApp</a>
-        <a class="primary-btn" href="tel:+390598723629">Chiama 059.8723629</a>
-        <a class="ghost-btn" href="#contatti" id="detailForm">Scrivici</a>
+        <a class="red-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${t('Chiedi info su WhatsApp')}</a>
+        <a class="primary-btn" href="tel:+390598723629">${t('Chiama')} 059.8723629</a>
+        <a class="ghost-btn" href="#contatti" id="detailForm">${t('Scrivici')}</a>
       </div>`;
     $('#detailForm').addEventListener('click', () => {
       const f = $('#contactForm');
@@ -273,11 +276,15 @@
   });
 
   /* Più cercati */
-  const chipData = towns.flatMap((t) => [
-    { label: `Case in vendita a ${t}`, town: t, category: 'Residenziale' },
-    { label: `Appartamenti a ${t}`, town: t, type: 'Appartamento' }
+  const chipData = towns.flatMap((town) => [
+    { label: 'Case in vendita a {town}', town, category: 'Residenziale' },
+    { label: 'Appartamenti a {town}', town, type: 'Appartamento' }
   ]);
-  $('#searchedChips').innerHTML = chipData.map((c, i) => `<button type="button" class="chip" data-chip="${i}">${esc(c.label)}</button>`).join('');
+  const renderChips = () => {
+    $('#searchedChips').innerHTML = chipData.map((c, i) =>
+      `<button type="button" class="chip" data-chip="${i}">${esc(t(c.label, { town: c.town }))}</button>`).join('');
+  };
+  renderChips();
   $('#searchedChips').addEventListener('click', (e) => {
     const c = chipData[e.target.closest('[data-chip]')?.dataset.chip];
     if (!c) return;
@@ -333,13 +340,13 @@
     const msg = form.querySelector('.form-msg');
     const invalid = [...form.elements].find((el) => el.willValidate && !el.checkValidity());
     if (invalid) {
-      msg.textContent = invalid.type === 'checkbox' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Compila i campi obbligatori (*).';
+      msg.textContent = t(invalid.type === 'checkbox' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Compila i campi obbligatori (*).');
       msg.className = 'form-msg full error';
       invalid.focus();
       return false;
     }
     if (extra && !extra()) return false;
-    msg.textContent = 'Grazie! Stiamo aprendo l\'app per inviare il messaggio.';
+    msg.textContent = t("Grazie! Stiamo aprendo l'app per inviare il messaggio.");
     msg.className = 'form-msg full ok';
     return true;
   }
@@ -350,7 +357,7 @@
     const ok = check(f, () => {
       if (f.antispam.value.trim() === '3') return true;
       const msg = f.querySelector('.form-msg');
-      msg.textContent = 'Risposta antispam non corretta.';
+      msg.textContent = t('Risposta antispam non corretta.');
       msg.className = 'form-msg full error';
       f.antispam.focus();
       return false;
@@ -378,6 +385,18 @@
       `Nominativo: ${f.name.value}`,
       `Telefono: ${f.phone.value}`
     ].filter(Boolean));
+  });
+
+  /* ---------- Cambio lingua ---------- */
+  document.addEventListener('langchange', () => {
+    renderListings();
+    renderChips();
+    document.querySelectorAll('.form-msg').forEach((m) => { m.textContent = ''; });
+    if (!detail.classList.contains('hidden') && current) {
+      const keep = photo;
+      openDetail(current.id);
+      showPhoto(keep);
+    }
   });
 
   /* ---------- Avvio ---------- */

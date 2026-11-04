@@ -20,6 +20,12 @@ Modifica `listings.js`: ogni annuncio è un blocco `{ ... }` con tipologia, cont
 comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) e foto
 (in `img/`). I campi `null` non vengono mostrati.
 
+## Traduzioni
+
+Tutti i testi tradotti sono in `i18n.js` (voce italiana → inglese, spagnolo). Per un annuncio,
+la descrizione in `listings.js` può essere scritta come `{ it: '…', en: '…', es: '…' }`.
+I messaggi che arrivano all'agenzia (WhatsApp/email) restano sempre in italiano.
+
 ## Funzioni
 
 - Ricerca per contratto, categoria, tipologia e comune
@@ -29,6 +35,8 @@ comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) 
 - Modulo contatti e modulo valutazione: aprono WhatsApp (328.6568572) o l'email
   `info@immobiliare-emmedue.it` con il messaggio già compilato (nessun server necessario)
 - Mappa della sede, pulsante WhatsApp sempre visibile, chip "Più cercati"
+- Tre lingue (IT / EN / ES) con selettore in alto (nel menu su telefono); la scelta viene ricordata.
+  Link diretti: `index.html?lang=en`, `index.html?lang=es`
 
 ## Da completare
 
@@ -39,4 +47,3 @@ comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) 
 - Annuncio "Appartamento – Modena, Viali": mancano camere, bagni e mq.
 - Il "Negozio in vendita – Modena" non è inserito (prezzo e dati non leggibili).
 - Link Privacy / Cookies: collegarli alle pagine reali.
-- Versioni EN / ES non ancora presenti.
