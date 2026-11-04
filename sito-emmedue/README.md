@@ -44,6 +44,20 @@ Il sito è ora una **demo** per la proposta all'agenzia: in `index.html` c'è
 `<meta name="robots" content="noindex, nofollow">`, che impedisce a Google di indicizzarlo.
 Quando va online sul dominio dell'agenzia, **togliere quella riga**.
 
+Alla messa online, inoltre:
+- verificare che `<link rel="canonical">` punti all'indirizzo definitivo (ora `https://www.immobiliare-emmedue.it/`);
+- aggiungere `<meta property="og:image">` con l'indirizzo completo di una foto (anteprima su WhatsApp/Facebook);
+- aggiungere `robots.txt` e `sitemap.xml`, e registrare il sito su Google Search Console e Google Business Profile.
+
+## Qualità (verificata)
+
+- Accessibilità WCAG 2.1 AA: 0 violazioni con axe-core, scheda dettaglio navigabile da tastiera
+  (il resto della pagina è bloccato mentre è aperta), errori dei moduli segnalati sui campi.
+- Contrasti ≥ 4,5:1, tasti ≥ 44 px su telefono, zoom 200% senza scorrimento orizzontale.
+- Immagini in WebP (circa la metà del peso), logo ridimensionato.
+- SEO: titolo e descrizione con parole chiave, dati strutturati `RealEstateAgent`
+  (indirizzo, telefoni, P.IVA, zone servite), anteprima link Open Graph, favicon.
+
 ## Da completare
 
 - Foto hero: ora è una foto generica da Unsplash; sostituirla con una foto vostra.

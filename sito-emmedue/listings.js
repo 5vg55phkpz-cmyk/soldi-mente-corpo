@@ -27,9 +27,9 @@ window.LISTINGS = [
     price: 260000,
     oldPrice: null,
     images: [
-      'img/sangiorgio-soggiorno.jpg',
-      'img/sangiorgio-esterno.jpg',
-      'img/sangiorgio-soggiorno-2.jpg'
+      'img/sangiorgio-soggiorno.webp',
+      'img/sangiorgio-esterno.webp',
+      'img/sangiorgio-soggiorno-2.webp'
     ],
     description: {
       it: 'Splendido trilocale con terrazzo abitabile e garage. A San Giorgio di Piano, in posizione strategica ' +
@@ -59,7 +59,7 @@ window.LISTINGS = [
     sqm: null,
     price: 248000,
     oldPrice: null,
-    images: ['img/appartamento-modena.jpg']
+    images: ['img/appartamento-modena.webp']
   },
   {
     id: 'ufficio-modena',
@@ -73,7 +73,7 @@ window.LISTINGS = [
     sqm: 130,
     price: 110000,
     oldPrice: 130000,
-    images: ['img/ufficio-modena.jpg']
+    images: ['img/ufficio-modena.webp']
   }
 ];
 

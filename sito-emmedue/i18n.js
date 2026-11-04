@@ -7,7 +7,7 @@
 (() => {
   const T = {
     /* --- Pagina --- */
-    'Immobiliare eMMe due · Modena': ['Immobiliare eMMe due · Real estate in Modena', 'Immobiliare eMMe due · Inmobiliaria en Módena'],
+    'Agenzia immobiliare Modena | Vendita e affitto | eMMe due': ['Real estate agency Modena | Sales and rentals | eMMe due', 'Inmobiliaria Módena | Venta y alquiler | eMMe due'],
     "Immobiliare eMMe due, torna all'inizio": ['Immobiliare eMMe due, back to top', 'Immobiliare eMMe due, volver al inicio'],
     'Navigazione principale': ['Main navigation', 'Navegación principal'],
     'Home': ['Home', 'Inicio'],
@@ -214,7 +214,7 @@
     document.documentElement.lang = lang;
     textNodes.forEach(({ n, key, pre, post }) => { n.nodeValue = pre + t(key) + post; });
     attrNodes.forEach(({ el, a, key }) => el.setAttribute(a, t(key)));
-    document.title = t('Immobiliare eMMe due · Modena');
+    document.title = t('Agenzia immobiliare Modena | Vendita e affitto | eMMe due');
     document.querySelectorAll('[data-lang]').forEach((b) => {
       const on = b.dataset.lang === lang;
       b.classList.toggle('active', on);

@@ -103,7 +103,7 @@
   function buildDots() {
     const pages = pageCount();
     dots.innerHTML = Array.from({ length: pages }, (_, i) =>
-      `<button type="button" role="tab" aria-label="${t('Pagina {n}', { n: i + 1 })}" data-page="${i}"></button>`).join('');
+      `<button type="button" aria-label="${t('Pagina {n}', { n: i + 1 })}" data-page="${i}"></button>`).join('');
     dots.hidden = pages < 2;
     syncDots();
   }
@@ -114,7 +114,7 @@
     const index = max <= 0 ? 0 : Math.round((track.scrollLeft / max) * (pages - 1));
     dots.querySelectorAll('button').forEach((d, i) => {
       d.classList.toggle('active', i === index);
-      d.setAttribute('aria-selected', String(i === index));
+      if (i === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
     });
   }
 
@@ -203,13 +203,22 @@
     showPhoto(0);
     lastFocus = document.activeElement;
     detail.classList.remove('hidden');
+    setInert(true);
     document.body.style.overflow = 'hidden';
     detail.scrollTop = 0;
     $('#detailClose').focus();
   }
 
+  /* Mentre la scheda è aperta il resto della pagina non è raggiungibile (tastiera e screen reader) */
+  function setInert(on) {
+    [...document.body.children].forEach((el) => {
+      if (el !== detail && el.tagName !== 'SCRIPT') el.inert = on;
+    });
+  }
+
   function closeDetail(restoreFocus = true) {
     detail.classList.add('hidden');
+    setInert(false);
     document.body.style.overflow = '';
     if (restoreFocus) lastFocus?.focus();
   }
@@ -338,7 +347,12 @@
 
   function check(form, extra) {
     const msg = form.querySelector('.form-msg');
-    const invalid = [...form.elements].find((el) => el.willValidate && !el.checkValidity());
+    const fields = [...form.elements].filter((el) => el.willValidate);
+    fields.forEach((el) => {
+      if (el.checkValidity()) el.removeAttribute('aria-invalid');
+      else el.setAttribute('aria-invalid', 'true');
+    });
+    const invalid = fields.find((el) => !el.checkValidity());
     if (invalid) {
       msg.textContent = t(invalid.type === 'checkbox' ? 'Per inviare devi accettare l\'informativa privacy.' : 'Compila i campi obbligatori (*).');
       msg.className = 'form-msg full error';
@@ -359,6 +373,7 @@
       const msg = f.querySelector('.form-msg');
       msg.textContent = t('Risposta antispam non corretta.');
       msg.className = 'form-msg full error';
+      f.antispam.setAttribute('aria-invalid', 'true');
       f.antispam.focus();
       return false;
     });
