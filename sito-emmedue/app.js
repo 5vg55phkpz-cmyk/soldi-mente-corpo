@@ -45,20 +45,19 @@
 
     return `
       <article class="listing-card">
-        <div class="listing-photo">
-          <img src="${esc(l.image)}" alt="${esc(`${l.type} in ${l.contract.toLowerCase()} a ${place}`)}" loading="lazy" />
+        <div class="listing-photo" data-detail="${esc(l.id)}">
+          <img src="${esc(l.images[0])}" alt="${esc(`${l.type} in ${l.contract.toLowerCase()} a ${place}`)}" loading="lazy" />
           <span class="badge">${esc(l.contract)}</span>
           <button class="fav-btn${isFav ? ' active' : ''}" type="button" data-fav="${esc(l.id)}"
             aria-pressed="${isFav}" aria-label="${isFav ? 'Rimuovi dai' : 'Aggiungi ai'} preferiti">${icons.heart}</button>
         </div>
         <div class="listing-body">
           <p class="listing-place">${esc(place)}</p>
-          <h3>${esc(l.type)} in ${esc(l.contract.toLowerCase())}</h3>
+          <h3><button type="button" class="title-btn" data-detail="${esc(l.id)}">${esc(l.type)} in ${esc(l.contract.toLowerCase())}</button></h3>
           ${stats ? `<div class="listing-stats">${stats}</div>` : ''}
           <div class="listing-foot">
             <p class="listing-price">${euro(l.price)} ${drop}</p>
-            <a class="info-link" href="#contatti" data-purpose="Informazioni su un annuncio"
-              data-message="${esc(`Vorrei informazioni su: ${l.type} in ${l.contract.toLowerCase()} a ${place}, ${euro(l.price)}.`)}">Info</a>
+            <button class="info-link" type="button" data-detail="${esc(l.id)}">Dettagli</button>
           </div>
         </div>
       </article>`;
@@ -124,6 +123,8 @@
   window.addEventListener('resize', buildDots);
 
   track.addEventListener('click', (e) => {
+    const detail = !e.target.closest('[data-fav]') && e.target.closest('[data-detail]');
+    if (detail) return openDetail(detail.dataset.detail);
     const btn = e.target.closest('[data-fav]');
     if (!btn) return;
     const id = btn.dataset.fav;
@@ -137,6 +138,100 @@
       btn.setAttribute('aria-pressed', String(on));
       btn.setAttribute('aria-label', `${on ? 'Rimuovi dai' : 'Aggiungi ai'} preferiti`);
     }
+  });
+
+  /* ---------- Scheda dettaglio ---------- */
+  const detail = $('#detail');
+  let current = null;
+  let photo = 0;
+  let lastFocus = null;
+
+  const placeOf = (l) => (l.zone ? `${l.town} · ${l.zone}` : l.town);
+
+  function showPhoto(i) {
+    const imgs = current.images;
+    photo = (i + imgs.length) % imgs.length;
+    const img = $('#galleryImg');
+    img.src = imgs[photo];
+    img.alt = `${current.type} a ${placeOf(current)}, foto ${photo + 1} di ${imgs.length}`;
+    $('#galleryCount').textContent = `${photo + 1} / ${imgs.length}`;
+    $('#galleryThumbs').querySelectorAll('button').forEach((b, j) => b.classList.toggle('active', j === photo));
+  }
+
+  function openDetail(id) {
+    current = listings.find((l) => l.id === id);
+    if (!current) return;
+    const l = current;
+    const multi = l.images.length > 1;
+    detail.querySelectorAll('.gallery-nav, .gallery-count').forEach((el) => { el.hidden = !multi; });
+    $('#galleryThumbs').hidden = !multi;
+    $('#galleryThumbs').innerHTML = l.images.map((src, i) =>
+      `<button type="button" data-photo="${i}" aria-label="Foto ${i + 1}"><img src="${esc(src)}" alt="" /></button>`).join('');
+
+    const facts = [
+      ['Superficie', l.sqm != null && `${l.sqm} m²`],
+      ['Locali', l.locali],
+      ['Camere', l.rooms],
+      ['Bagni', l.baths]
+    ].filter(([, v]) => v !== null && v !== undefined && v !== false);
+    const drop = l.oldPrice && l.oldPrice > l.price
+      ? `<span class="price-drop">${icons.down}-${(((l.oldPrice - l.price) / l.oldPrice) * 100).toFixed(1).replace('.', ',')}% <s>${euro(l.oldPrice)}</s></span>` : '';
+    const msg = `Buongiorno, vorrei informazioni su: ${l.type} in ${l.contract.toLowerCase()} a ${placeOf(l)}, ${euro(l.price)}.`;
+
+    $('#detailBody').innerHTML = `
+      <p class="listing-place">${esc(l.category)} · ${esc(placeOf(l))}</p>
+      <h2 id="detailTitle">${esc(l.type)} in ${esc(l.contract.toLowerCase())}</h2>
+      <p class="detail-price">${euro(l.price)} ${drop}</p>
+      ${facts.length ? `<dl class="facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
+      ${l.description ? `<p class="detail-desc">${esc(l.description)}</p>` : ''}
+      ${l.features?.length ? `<ul class="features">${l.features.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
+      <div class="detail-actions">
+        <a class="red-btn" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Chiedi info su WhatsApp</a>
+        <a class="primary-btn" href="tel:+390598723629">Chiama 059.8723629</a>
+        <a class="ghost-btn" href="#contatti" id="detailForm">Scrivici</a>
+      </div>`;
+    $('#detailForm').addEventListener('click', () => {
+      const f = $('#contactForm');
+      f.purpose.value = 'Informazioni su un annuncio';
+      f.message.value = msg;
+      closeDetail(false);
+    });
+
+    showPhoto(0);
+    lastFocus = document.activeElement;
+    detail.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    detail.scrollTop = 0;
+    $('#detailClose').focus();
+  }
+
+  function closeDetail(restoreFocus = true) {
+    detail.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (restoreFocus) lastFocus?.focus();
+  }
+
+  $('#detailClose').addEventListener('click', () => closeDetail());
+  detail.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
+  $('#galleryPrev').addEventListener('click', () => showPhoto(photo - 1));
+  $('#galleryNext').addEventListener('click', () => showPhoto(photo + 1));
+  $('#galleryThumbs').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-photo]');
+    if (b) showPhoto(Number(b.dataset.photo));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (detail.classList.contains('hidden')) return;
+    if (e.key === 'Escape') closeDetail();
+    if (e.key === 'ArrowLeft' && current.images.length > 1) showPhoto(photo - 1);
+    if (e.key === 'ArrowRight' && current.images.length > 1) showPhoto(photo + 1);
+  });
+  let touchX = null;
+  $('#galleryImg').addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  $('#galleryImg').addEventListener('touchend', (e) => {
+    if (touchX === null || current.images.length < 2) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) showPhoto(photo + (dx < 0 ? 1 : -1));
+    touchX = null;
   });
 
   /* ---------- Ricerca ---------- */

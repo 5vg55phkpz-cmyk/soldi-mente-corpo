@@ -6,7 +6,10 @@
  *   contract:  'Vendita' | 'Affitto'
  *   category:  'Residenziale' | 'Commerciale'
  *   type:      'Appartamento' | 'Villa' | 'Ufficio' | 'Negozio' | ...
+ *   rooms:     camere da letto        locali: numero di locali
  *   oldPrice:  prezzo precedente (per mostrare il ribasso), altrimenti null
+ *   images:    elenco foto (la prima è la copertina)
+ *   description / features: testo e caratteristiche mostrati nella scheda "Dettagli"
  */
 window.LISTINGS = [
   {
@@ -16,12 +19,23 @@ window.LISTINGS = [
     category: 'Residenziale',
     town: 'San Giorgio di Piano',
     zone: null,
+    locali: 3,
     rooms: 2,
     baths: 1,
     sqm: 95,
     price: 260000,
     oldPrice: null,
-    image: 'img/appartamento-san-giorgio.jpg'
+    images: [
+      'img/sangiorgio-soggiorno.jpg',
+      'img/sangiorgio-esterno.jpg',
+      'img/sangiorgio-soggiorno-2.jpg'
+    ],
+    description:
+      'Splendido trilocale con terrazzo abitabile e garage. A San Giorgio di Piano, in posizione strategica ' +
+      'limitrofa al centro e comoda a tutti i servizi, proponiamo in vendita un appartamento impeccabile ' +
+      "situato al primo piano con ascensore. L'immobile si trova all'interno di una palazzina del 2008, " +
+      'completamente priva di barriere architettoniche e dotata di cappotto.',
+    features: ['Terrazzo abitabile', 'Garage', 'Primo piano con ascensore', 'Palazzina del 2008', 'Senza barriere architettoniche', 'Cappotto']
   },
   {
     id: 'app-modena-viali',
@@ -35,7 +49,7 @@ window.LISTINGS = [
     sqm: null,
     price: 248000,
     oldPrice: null,
-    image: 'img/appartamento-modena.jpg'
+    images: ['img/appartamento-modena.jpg']
   },
   {
     id: 'ufficio-modena',
@@ -49,7 +63,7 @@ window.LISTINGS = [
     sqm: 130,
     price: 110000,
     oldPrice: 130000,
-    image: 'img/ufficio-modena.jpg'
+    images: ['img/ufficio-modena.jpg']
   }
 ];
 

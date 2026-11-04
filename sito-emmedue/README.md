@@ -23,6 +23,8 @@ comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) 
 ## Funzioni
 
 - Ricerca per contratto, categoria, tipologia e comune
+- Scheda "Dettagli" per ogni annuncio: galleria foto, superficie, locali, camere, bagni,
+  descrizione, caratteristiche e pulsanti WhatsApp / Chiama / Scrivici
 - Preferiti (cuore sugli annunci, salvati nel browser del visitatore)
 - Modulo contatti e modulo valutazione: aprono WhatsApp (328.6568572) o l'email
   `info@immobiliare-emmedue.it` con il messaggio già compilato (nessun server necessario)
@@ -32,6 +34,8 @@ comune, camere, bagni, mq, prezzo, eventuale prezzo precedente (per il ribasso) 
 
 - Foto hero: ora è una foto generica da Unsplash; sostituirla con una foto vostra.
 - Le foto degli annunci sono ritagliate dagli screenshot del sito attuale: meglio usare gli originali.
+- San Giorgio di Piano: la descrizione si interrompe a "dotata di cappotto" (manca il seguito);
+  mancano le altre foto della galleria (corridoio, armadi, cucina…).
 - Annuncio "Appartamento – Modena, Viali": mancano camere, bagni e mq.
 - Il "Negozio in vendita – Modena" non è inserito (prezzo e dati non leggibili).
 - Link Privacy / Cookies: collegarli alle pagine reali.
